@@ -10,7 +10,7 @@
             <a href="/edukasi" class="dashboard-card white">
                 <div class="card-icon">📚</div>
                 <div class="card-title">Edukasi</div>
-                <div class="card-desc">Belajar gizi sehat</div>
+                <div class="card-desc">Pelajari gizi dan kesehatan!</div>
             </a>
 
             <a href="/pencatatan" class="dashboard-card white">
