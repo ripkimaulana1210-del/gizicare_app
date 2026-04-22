@@ -1,0 +1,14 @@
+/* IMPORT HARUS PALING ATAS */
+@import './pages/dashboard.css';
+@import './pages/pencatatan.css';
+@import './pages/edukasi.css';
+
+/* COMPONENTS */
+@import './components/button.css';
+@import './components/card.css';
+@import './components/form.css';
+
+/* TAILWIND TARUH DI BAWAH */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

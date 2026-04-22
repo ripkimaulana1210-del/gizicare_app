@@ -1,0 +1,54 @@
+.edukasi-hero {
+    background: linear-gradient(135deg, #22a44e, #00d4a8);
+    color: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.grid-edukasi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.card-edukasi {
+    background: white;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(34, 164, 78, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.card-edukasi:hover {
+    transform: translateY(-4px);
+}
+
+.badge-type {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.badge-type.materi {
+    background: #e6f9ed;
+    color: #22a44e;
+}
+
+.badge-type.jurnal {
+    background: #e6f0ff;
+    color: #2563eb;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn-link {
+    color: #22a44e;
+    font-weight: bold;
+}
