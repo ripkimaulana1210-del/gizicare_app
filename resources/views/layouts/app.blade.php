@@ -1,62 +1,78 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'GiziCare') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>@yield('title', 'GiziCare')</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
+<body class="app-body">
 
-<body class="font-sans antialiased bg-gray-100">
+    {{-- Navbar --}}
+    <nav class="site-navbar">
+        <div class="site-navbar__inner">
+            <a href="{{ route('home') }}" class="brand-link" aria-label="GiziCare home">
+                <span class="brand-mark">GC</span>
+                <span class="brand-title">GiziCare</span>
+            </a>
 
-    <!-- 🔥 NAVBAR CUSTOM -->
-    <nav class="bg-green-600 text-white px-6 py-4 flex justify-between items-center shadow">
-        <div class="font-bold text-lg">
-            🥗 GiziCare
-        </div>
+            @php
+                $navItems = [
+                    ['label' => 'Home', 'url' => route('home'), 'pattern' => 'home'],
+                    ['label' => 'Edukasi', 'url' => route('edukasi.index'), 'pattern' => 'edukasi.*'],
+                    ['label' => 'Pencatatan', 'url' => route('pencatatan.index'), 'pattern' => 'pencatatan.*'],
+                    ['label' => 'Diagnosis', 'url' => route('diagnosis'), 'pattern' => 'diagnosis'],
+                ];
+            @endphp
 
-        <div class="space-x-6">
-            <a href="/dashboard" class="hover:underline">Dashboard</a>
-            <a href="/pencatatan" class="hover:underline">Pencatatan</a>
-            <a href="/edukasi" class="hover:underline">Edukasi</a>
-            <a href="/diagnosis" class="hover:underline">Diagnosis</a>
-        </div>
+            <div class="site-nav" aria-label="Navigasi utama">
+                @foreach ($navItems as $item)
+                    @php($isActive = request()->routeIs($item['pattern']))
+                    <a
+                        href="{{ $item['url'] }}"
+                        class="site-nav__link {{ $isActive ? 'is-active' : '' }}"
+                        @if($isActive) aria-current="page" @endif
+                    >
+                        {{ $item['label'] }}
+                    </a>
+                @endforeach
+            </div>
 
-        <div class="flex items-center gap-3">
-            <span>{{ auth()->user()->name ?? 'User' }}</span>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="bg-red-500 px-3 py-1 rounded">
-                    Logout
-                </button>
-            </form>
+            <div class="site-actions">
+                @auth
+                    <span class="site-user">{{ auth()->user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button class="btn-app btn-danger">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn-app btn-ghost">Masuk</a>
+                    <a href="{{ route('register') }}" class="btn-app btn-primary">Daftar</a>
+                @endauth
+            </div>
         </div>
     </nav>
 
-    <!-- 🔥 HEADER (OPSIONAL) -->
-    @isset($header)
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-4 px-6">
-                {{ $header }}
+    @hasSection('header')
+        <div class="app-header">
+            <div class="app-header__inner">
+                @yield('header')
             </div>
-        </header>
-    @endisset
+        </div>
+    @endif
 
-    <!-- 🔥 CONTENT (INI YANG PENTING BUAT $slot) -->
-    <main class="p-6">
-        {{ $slot }}
+    {{-- Content --}}
+    <main class="app-main">
+        @yield('content')
     </main>
 
-</body>
+    {{-- Footer --}}
+    <footer class="site-footer">
+        &copy; {{ date('Y') }} GiziCare
+    </footer>
 
+</body>
 </html>

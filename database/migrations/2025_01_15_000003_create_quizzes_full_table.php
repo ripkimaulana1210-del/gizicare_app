@@ -6,15 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        if (Schema::hasTable('quizzes')) {
-            return;
-        }
-
+        Schema::dropIfExists('quizzes');
+        
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('edukasi_id')->nullable()->constrained('edukasis')->onDelete('cascade');
@@ -27,9 +22,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('quizzes');

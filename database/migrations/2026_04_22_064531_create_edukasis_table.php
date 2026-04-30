@@ -11,11 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('edukasis')) {
+            return;
+        }
+
         Schema::create('edukasis', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
             $table->text('konten');
             $table->string('tipe'); // artikel/video
+            $table->string('kategori')->nullable();
+            $table->string('gambar')->nullable();
+            $table->string('sumber')->nullable();
+            $table->integer('durasi_baca')->nullable()->comment('dalam menit');
             $table->timestamps();
         });
     }

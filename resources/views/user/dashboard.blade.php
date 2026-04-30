@@ -1,31 +1,37 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="page-title">Dashboard User 👤</h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="dashboard-container">
+@section('title', 'Dashboard - GiziCare')
 
-        <div class="dashboard-grid">
+@section('header')
+    <h1 class="page-title">Dashboard</h1>
+@endsection
 
-            <a href="/edukasi" class="dashboard-card white">
-                <div class="card-icon">📚</div>
-                <div class="card-title">Edukasi</div>
-                <div class="card-desc">Belajar gizi sehat</div>
-            </a>
-
-            <a href="/pencatatan" class="dashboard-card white">
-                <div class="card-icon">🧮</div>
-                <div class="card-title">Input Gizi</div>
-                <div class="card-desc">Cek status gizi kamu</div>
-            </a>
-
-            <a href="/diagnosis" class="dashboard-card white">
-                <div class="card-icon">🧪</div>
-                <div class="card-title">Diagnosis</div>
-                <div class="card-desc">Deteksi masalah gizi</div>
-            </a>
-
-        </div>
-
+@section('content')
+<section class="dashboard-welcome">
+    <div>
+        <h2>Halo, {{ auth()->user()->name }}</h2>
+        <p>Lanjutkan pemantauan gizi hari ini dari satu tempat yang lebih segar.</p>
     </div>
-</x-app-layout>
+    <div class="dashboard-welcome__badge">GiziCare</div>
+</section>
+
+<div class="feature-grid">
+    <a href="{{ route('edukasi.index') }}" class="feature-card feature-card--green">
+        <span class="feature-card__icon">ED</span>
+        <h3>Edukasi</h3>
+        <p>Belajar materi gizi sehat untuk keluarga.</p>
+    </a>
+
+    <a href="{{ route('pencatatan.index') }}" class="feature-card feature-card--pink">
+        <span class="feature-card__icon">PC</span>
+        <h3>Pencatatan</h3>
+        <p>Catat data pertumbuhan dan status gizi balita.</p>
+    </a>
+
+    <a href="{{ route('diagnosis') }}" class="feature-card feature-card--red">
+        <span class="feature-card__icon">DG</span>
+        <h3>Diagnosis</h3>
+        <p>Deteksi masalah gizi berdasarkan data anak.</p>
+    </a>
+</div>
+@endsection
