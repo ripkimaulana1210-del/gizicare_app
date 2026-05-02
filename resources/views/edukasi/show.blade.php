@@ -12,7 +12,7 @@
             <span>/</span>
             <a href="{{ route('edukasi.index') }}">Edukasi</a>
             <span>/</span>
-            <span>{{ $edukasi->tipe === 'materi' ? 'Materi' : 'Jurnal' }}</span>
+            <span>{{ $edukasi->tipe === 'materi' ? 'Materi' : 'Jurnal/Laporan' }}</span>
         </nav>
 
         <header class="article-detail__header">
@@ -23,7 +23,7 @@
 
             <div class="article-detail__meta">
                 <span class="badge-type {{ $edukasi->tipe === 'materi' ? 'materi' : 'jurnal' }}">
-                    {{ $edukasi->tipe === 'materi' ? 'Materi' : 'Jurnal' }}
+                    {{ $edukasi->tipe === 'materi' ? 'Materi' : 'Jurnal/Laporan' }}
                 </span>
                 @if($edukasi->kategori)
                     <span class="chip chip-small">{{ $edukasi->kategori }}</span>
@@ -49,10 +49,10 @@
                 </div>
                 <div class="journal-summary-box__actions">
                     <a href="{{ $scholarUrl }}" target="_blank" rel="noopener noreferrer" class="btn-app btn-primary">
-                        Cari PDF di Google Scholar
+                        Cari referensi
                     </a>
                     <a href="{{ $pdfUrl }}" target="_blank" rel="noopener noreferrer" class="btn-app btn-ghost">
-                        PDF Resmi Jurnal
+                        Buka sumber resmi
                     </a>
                 </div>
             </aside>
@@ -70,10 +70,10 @@
                 @php($scholarUrl = $edukasi->google_scholar_url ?: 'https://scholar.google.com/scholar?q=' . urlencode($edukasi->judul))
                 @php($pdfUrl = $edukasi->pdf_url ?: $scholarUrl)
                 <a href="{{ $scholarUrl }}" target="_blank" rel="noopener noreferrer" class="btn-app btn-primary">
-                    Cari PDF di Google Scholar
+                    Cari referensi
                 </a>
                 <a href="{{ $pdfUrl }}" target="_blank" rel="noopener noreferrer" class="btn-app btn-ghost">
-                    PDF Resmi Jurnal
+                    Buka sumber resmi
                 </a>
             @endif
         </div>
@@ -84,14 +84,14 @@
         <div class="content-section-title">
             <div>
                 <p>Rekomendasi</p>
-                <h3>{{ $edukasi->tipe === 'materi' ? 'Materi Lainnya' : 'Jurnal Terkait' }}</h3>
+                <h3>{{ $edukasi->tipe === 'materi' ? 'Materi Lainnya' : 'Bacaan Terkait' }}</h3>
             </div>
         </div>
         <div class="grid-edukasi">
             @foreach($related as $item)
                 <a href="{{ route('edukasi.show', $item->id) }}" class="card-edukasi article-card article-card--compact">
                     <span class="badge-type {{ $item->tipe === 'materi' ? 'materi' : 'jurnal' }}">
-                        {{ $item->tipe === 'materi' ? 'Materi' : 'Jurnal' }}
+                        {{ $item->tipe === 'materi' ? 'Materi' : 'Jurnal/Laporan' }}
                     </span>
                     <h4>{{ $item->judul }}</h4>
                     <p>{{ Str::limit(strip_tags($item->konten), 88) }}</p>

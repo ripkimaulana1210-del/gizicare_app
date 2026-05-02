@@ -1,12 +1,13 @@
 <?php
 
 if (!function_exists('hitungStatus')) {
-    function hitungStatus($bb, $tb)
+    function hitungStatus($bb, $tb, $jk = null, $umur = null)
     {
-        $imt = $bb / (($tb / 100) * ($tb / 100));
+        if ($jk !== null && $umur !== null) {
+            return app(\App\Services\WhoGrowthStandard::class)
+                ->assess((string) $jk, (int) $umur, (float) $bb, (float) $tb)['status'];
+        }
 
-        if ($imt < 18.5) return "Kurus";
-        elseif ($imt < 25) return "Normal";
-        else return "Gemuk";
+        return 'Butuh umur dan jenis kelamin';
     }
 }

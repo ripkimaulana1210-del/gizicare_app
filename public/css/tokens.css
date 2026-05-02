@@ -1,0 +1,75 @@
+:root {
+    --ds-bg: #f5f8f6;
+    --ds-canvas: #ffffff;
+    --ds-surface: rgba(255, 255, 255, 0.96);
+    --ds-surface-muted: #f8fbf9;
+    --ds-ink: #101f18;
+    --ds-text: #2e4037;
+    --ds-muted: #687970;
+    --ds-line: #d8e5dd;
+    --ds-line-soft: #edf3ef;
+    --ds-green-900: #083a24;
+    --ds-green-800: #0b4a2d;
+    --ds-green-700: #11663f;
+    --ds-teal-700: #0f766e;
+    --ds-blue-700: #2f5c9f;
+    --ds-amber-700: #a15c07;
+    --ds-rose-700: #b4234a;
+    --ds-success-bg: #e7f6ed;
+    --ds-warning-bg: #fff5dd;
+    --ds-danger-bg: #fff1f5;
+    --ds-blue-bg: #edf4ff;
+    --ds-radius: 12px;
+    --ds-radius-sm: 8px;
+    --ds-radius-xs: 6px;
+    --ds-shadow-xs: 0 1px 2px rgba(16, 31, 24, 0.05);
+    --ds-shadow-sm: 0 10px 26px rgba(16, 31, 24, 0.075);
+    --ds-shadow-md: 0 18px 46px rgba(16, 31, 24, 0.105);
+    --ds-shadow-lg: 0 28px 72px rgba(16, 31, 24, 0.16);
+    --ds-focus: 0 0 0 4px rgba(15, 118, 110, 0.14);
+    --ds-fast: 160ms ease;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--ds-bg);
+    scroll-behavior: smooth;
+}
+
+body.app-body,
+body.auth-body {
+    color: var(--ds-text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0;
+    background:
+        linear-gradient(180deg, #f4f8f6 0%, #ffffff 48%, #f7faf8 100%),
+        linear-gradient(90deg, rgba(11, 74, 45, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(47, 92, 159, 0.03) 1px, transparent 1px);
+    background-size: auto, 46px 46px, 46px 46px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+}
+
+body.app-body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: 240px;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(11, 74, 45, 0.08), rgba(11, 74, 45, 0));
+    z-index: -1;
+}
+
+a {
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}

@@ -9,10 +9,10 @@
 @section('content')
 @php
     $starterPrompts = [
-        'Anak saya susah makan dan berat badannya sulit naik.',
-        'Bagaimana tanda awal stunting yang perlu saya cek?',
-        'Anak sering lemas dan tampak pucat, apa yang harus dilakukan?',
-        'Tolong bantu susun menu harian anak usia 2 tahun.',
+        'Anak susah makan dan berat sulit naik.',
+        'Cek tanda awal stunting yang perlu diperhatikan.',
+        'Anak sering lemas dan tampak pucat.',
+        'Susun menu harian anak usia 2 tahun.',
     ];
 @endphp
 
@@ -20,52 +20,18 @@
     <section class="diagnosis-chat-hero">
         <div>
             <p class="hero-kicker">Konsultasi AI</p>
-            <h3>Ceritakan kondisi gizi yang sedang dialami.</h3>
-            <p>Konsultasi awal untuk pola makan, pertumbuhan, stunting, anemia, berat badan, dan kebiasaan makan anak.</p>
+            <h3>Ruang chat untuk pertanyaan gizi anak.</h3>
+            <p>Tulis kondisi anak, pola makan, atau hasil pencatatan. AI akan membantu memberi arahan awal yang mudah dipahami.</p>
         </div>
 
         <div class="diagnosis-ai-status {{ $aiReady ? 'is-ready' : 'is-missing' }}">
             <span></span>
-            <strong>{{ $aiReady ? 'OpenAI aktif' : 'API key belum aktif' }}</strong>
-            <small>{{ $openAiModel }}</small>
+            <strong>{{ $aiReady ? 'Gemini aktif' : 'API key belum aktif' }}</strong>
+            <small>{{ $geminiModel }}</small>
         </div>
     </section>
 
-    <div class="diagnosis-chat-layout">
-        <aside class="diagnosis-profile-panel" aria-label="Profil anak">
-            <div class="panel-heading">
-                <p>Profil</p>
-                <h3>Data Anak</h3>
-            </div>
-
-            <div class="diagnosis-profile-grid">
-                <label>
-                    <span>Nama</span>
-                    <input type="text" id="profileName" placeholder="Nama anak" autocomplete="name">
-                </label>
-
-                <label>
-                    <span>Umur</span>
-                    <input type="number" id="profileAge" min="0" max="216" placeholder="Bulan">
-                </label>
-
-                <label>
-                    <span>Berat</span>
-                    <input type="number" id="profileWeight" min="0" max="250" step="0.1" placeholder="Kg">
-                </label>
-
-                <label>
-                    <span>Tinggi</span>
-                    <input type="number" id="profileHeight" min="0" max="250" step="0.1" placeholder="Cm">
-                </label>
-            </div>
-
-            <div class="diagnosis-safety-note">
-                <strong>Konsultasi awal</strong>
-                <p>Untuk sesak, kejang, lemas berat, dehidrasi, demam tinggi, atau muntah/diare terus-menerus, segera ke fasilitas kesehatan.</p>
-            </div>
-        </aside>
-
+    <div class="diagnosis-chat-layout diagnosis-chat-layout--solo">
         <section
             class="diagnosis-chat-panel"
             data-endpoint="{{ route('diagnosis.chat') }}"
@@ -75,9 +41,15 @@
             <div class="diagnosis-chat-topbar">
                 <div>
                     <p>GiziCare AI</p>
-                    <h3>Konsultasi Masalah Gizi</h3>
+                    <h3>Chat Diagnosis Gizi</h3>
                 </div>
-                <span class="diagnosis-chat-dot {{ $aiReady ? 'is-ready' : 'is-missing' }}"></span>
+                <div class="diagnosis-chat-topbar__meta">
+                    <span>Pola makan</span>
+                    <span>Pertumbuhan</span>
+                    <span>MPASI</span>
+                    <span>Anemia</span>
+                    <span class="diagnosis-chat-dot {{ $aiReady ? 'is-ready' : 'is-missing' }}"></span>
+                </div>
             </div>
 
             <div class="diagnosis-chat-messages" id="diagnosisChatMessages" aria-live="polite">
@@ -127,15 +99,6 @@
     }
 
     const endpoint = panel.dataset.endpoint;
-
-    const profileValue = (id) => document.getElementById(id)?.value?.trim() || '';
-
-    const currentProfile = () => ({
-        nama: profileValue('profileName'),
-        umur: profileValue('profileAge'),
-        berat: profileValue('profileWeight'),
-        tinggi: profileValue('profileHeight'),
-    });
 
     const appendMessage = (role, content, state = '') => {
         const item = document.createElement('article');
@@ -193,7 +156,6 @@
                 },
                 body: JSON.stringify({
                     message,
-                    profile: currentProfile(),
                     history: history.slice(-6),
                 }),
             });

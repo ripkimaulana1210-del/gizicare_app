@@ -18,6 +18,21 @@
         </div>
     </div>
 
+    <section class="quiz-dashboard-strip" aria-label="Ringkasan quiz">
+        <div>
+            <span>Format</span>
+            <strong>10 soal acak</strong>
+        </div>
+        <div>
+            <span>Evaluasi</span>
+            <strong>Skor langsung</strong>
+        </div>
+        <div>
+            <span>Review</span>
+            <strong>Pembahasan</strong>
+        </div>
+    </section>
+
     <div class="form-card quiz-start">
         <div class="quiz-start__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -26,7 +41,7 @@
             </svg>
         </div>
         <h4>Siap mulai quiz?</h4>
-        <p>Kamu akan mendapat 5 soal acak dari total {{ $totalSoal }} soal.</p>
+        <p>Kamu akan mendapat 10 soal acak dari total {{ $totalSoal }} soal.</p>
 
         <a href="{{ route('quiz.show') }}" class="btn-app btn-primary btn-large">
             <span>Mulai Quiz</span>

@@ -18,6 +18,24 @@
         </div>
     </div>
 
+    <section class="learning-stats" aria-label="Ringkasan edukasi">
+        <div>
+            <span>Materi</span>
+            <strong>{{ $materi->count() }}</strong>
+            <p>panduan praktis</p>
+        </div>
+        <div>
+            <span>Bacaan</span>
+            <strong>{{ $jurnal->count() }}</strong>
+            <p>jurnal dan laporan</p>
+        </div>
+        <div>
+            <span>Quiz</span>
+            <strong>{{ $totalQuiz }}</strong>
+            <p>soal tersedia</p>
+        </div>
+    </section>
+
     @if($kategori->count() > 0)
     <div class="chip-row" aria-label="Kategori edukasi">
         <span class="chip is-active">Semua</span>
@@ -97,9 +115,9 @@
     <div class="content-section-title">
         <div>
             <p>Bacaan Pendukung</p>
-            <h3>Jurnal Ilmiah</h3>
+            <h3>Jurnal dan Laporan</h3>
         </div>
-        <span>{{ $jurnal->count() }} jurnal</span>
+        <span>{{ $jurnal->count() }} bacaan</span>
     </div>
 
     <div class="grid-edukasi">
@@ -115,7 +133,7 @@
                     @endif
                 </a>
                 <div class="article-card__meta">
-                    <span class="badge-type jurnal">Jurnal</span>
+                    <span class="badge-type jurnal">Jurnal/Laporan</span>
                     @if($item->kategori)
                         <span>{{ $item->kategori }}</span>
                     @endif
@@ -131,7 +149,7 @@
                     <span>{{ $item->durasi_baca ?? 10 }} menit</span>
                     <div class="article-card__links">
                         <a href="{{ route('edukasi.show', $item->id) }}">Detail</a>
-                        <a href="{{ $scholarUrl }}" target="_blank" rel="noopener noreferrer" class="scholar-link">Cari PDF di Scholar</a>
+                        <a href="{{ $scholarUrl }}" target="_blank" rel="noopener noreferrer" class="scholar-link">Cari referensi</a>
                     </div>
                 </div>
             </article>

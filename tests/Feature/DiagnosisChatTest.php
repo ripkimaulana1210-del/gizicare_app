@@ -7,9 +7,9 @@ use Tests\TestCase;
 
 class DiagnosisChatTest extends TestCase
 {
-    public function test_diagnosis_chat_requires_openai_api_key(): void
+    public function test_diagnosis_chat_requires_gemini_api_key(): void
     {
-        config(['services.openai.api_key' => null]);
+        config(['services.gemini.api_key' => null]);
 
         $response = $this->postJson(route('diagnosis.chat'), [
             'message' => 'Anak saya susah makan.',
@@ -18,20 +18,28 @@ class DiagnosisChatTest extends TestCase
         $response
             ->assertStatus(503)
             ->assertJsonFragment([
-                'message' => 'OPENAI_API_KEY belum diatur di file .env. Isi key lalu jalankan php artisan config:clear.',
+                'message' => 'GEMINI_API_KEY belum diatur di file .env. Isi key dari Google AI Studio lalu jalankan php artisan config:clear.',
             ]);
     }
 
-    public function test_diagnosis_chat_returns_openai_reply(): void
+    public function test_diagnosis_chat_returns_gemini_reply(): void
     {
         config([
-            'services.openai.api_key' => 'test-key',
-            'services.openai.model' => 'gpt-5-mini',
+            'services.gemini.api_key' => 'test-key',
+            'services.gemini.model' => 'gemini-2.5-flash',
         ]);
 
         Http::fake([
-            'api.openai.com/v1/responses' => Http::response([
-                'output_text' => "1. Ringkasan singkat kondisi.\nAnak perlu dipantau pola makannya.",
+            'generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                ['text' => "1. Ringkasan singkat kondisi.\nAnak perlu dipantau pola makannya."],
+                            ],
+                        ],
+                    ],
+                ],
             ]),
         ]);
 
@@ -49,28 +57,29 @@ class DiagnosisChatTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'reply' => "1. Ringkasan singkat kondisi.\nAnak perlu dipantau pola makannya.",
-                'model' => 'gpt-5-mini',
+                'model' => 'gemini-2.5-flash',
             ]);
 
-        Http::assertSent(fn ($request) => $request->url() === 'https://api.openai.com/v1/responses'
-            && $request['model'] === 'gpt-5-mini'
-            && $request['max_output_tokens'] === 800
+        Http::assertSent(fn ($request) => $request->url() === 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent'
+            && $request->hasHeader('x-goog-api-key', 'test-key')
+            && $request['generationConfig']['maxOutputTokens'] === 800
+            && $request['contents'][0]['role'] === 'user'
         );
     }
 
-    public function test_diagnosis_chat_reports_openai_quota_problem(): void
+    public function test_diagnosis_chat_reports_gemini_quota_problem(): void
     {
         config([
-            'services.openai.api_key' => 'test-key',
-            'services.openai.model' => 'gpt-5-mini',
+            'services.gemini.api_key' => 'test-key',
+            'services.gemini.model' => 'gemini-2.5-flash',
         ]);
 
         Http::fake([
-            'api.openai.com/v1/responses' => Http::response([
+            'generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent' => Http::response([
                 'error' => [
-                    'message' => 'You exceeded your current quota.',
-                    'type' => 'insufficient_quota',
-                    'code' => 'insufficient_quota',
+                    'code' => 429,
+                    'message' => 'Quota exceeded.',
+                    'status' => 'RESOURCE_EXHAUSTED',
                 ],
             ], 429),
         ]);
@@ -82,7 +91,7 @@ class DiagnosisChatTest extends TestCase
         $response
             ->assertStatus(429)
             ->assertJson([
-                'message' => 'API key sudah terbaca, tetapi kuota atau billing OpenAI belum aktif atau sudah habis. Cek Usage dan Billing di dashboard OpenAI.',
+                'message' => 'Batas request Gemini sedang tercapai. Tunggu kuota reset atau cek limit di Google AI Studio.',
             ]);
     }
 }

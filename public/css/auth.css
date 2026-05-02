@@ -1,0 +1,66 @@
+.auth-shell {
+    border: 1px solid var(--ds-line);
+    border-radius: var(--ds-radius);
+    box-shadow: var(--ds-shadow-md);
+}
+
+.auth-visual {
+    background:
+        linear-gradient(180deg, rgba(11, 74, 45, 0.18), rgba(11, 74, 45, 0.9)),
+        url("https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1500&q=82") center / cover;
+}
+
+.auth-panel {
+    background: linear-gradient(180deg, #ffffff, #f8fbf9);
+}
+
+.auth-card {
+    width: min(100%, 430px);
+}
+
+.auth-title {
+    color: var(--ds-ink);
+}
+
+.auth-copy,
+.auth-switch,
+.auth-oauth-note {
+    color: var(--ds-muted);
+}
+
+.auth-form {
+    gap: 14px;
+}
+
+.auth-row {
+    align-items: center;
+}
+
+.auth-link {
+    color: var(--ds-teal-700);
+    font-weight: 850;
+}
+
+.auth-divider {
+    margin: 20px 0;
+}
+
+.google-button {
+    min-height: 46px;
+    border: 1px solid var(--ds-line);
+    border-radius: var(--ds-radius-sm);
+    background: #ffffff;
+    box-shadow: var(--ds-shadow-sm);
+    transition: transform var(--ds-fast), box-shadow var(--ds-fast), border-color var(--ds-fast);
+}
+
+.google-button:hover {
+    border-color: rgba(15, 118, 110, 0.32);
+    box-shadow: var(--ds-shadow-md);
+    transform: translateY(-1px);
+}
+
+.auth-alert,
+.auth-status {
+    border-radius: var(--ds-radius-sm);
+}

@@ -7,7 +7,7 @@
     <title>@yield('title', 'GiziCare')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="/css/app.css?v={{ filemtime(public_path('css/app.css')) }}">
 </head>
 <body class="app-body">
 
@@ -19,16 +19,28 @@
                 <span class="brand-title">GiziCare</span>
             </a>
 
+            <button
+                type="button"
+                class="site-nav-toggle"
+                aria-controls="siteNav"
+                aria-expanded="false"
+                data-nav-toggle
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             @php
                 $navItems = [
-                    ['label' => 'Home', 'url' => route('home'), 'pattern' => 'home'],
-                    ['label' => 'Edukasi', 'url' => route('edukasi.index'), 'pattern' => 'edukasi.*'],
-                    ['label' => 'Pencatatan', 'url' => route('pencatatan.index'), 'pattern' => 'pencatatan.*'],
-                    ['label' => 'Diagnosis', 'url' => route('diagnosis'), 'pattern' => 'diagnosis'],
+                    ['label' => 'Home', 'url' => route('home'), 'pattern' => 'home', 'icon' => 'home'],
+                    ['label' => 'Edukasi', 'url' => route('edukasi.index'), 'pattern' => 'edukasi.*', 'icon' => 'book'],
+                    ['label' => 'Pencatatan', 'url' => route('pencatatan.index'), 'pattern' => 'pencatatan.*', 'icon' => 'chart'],
+                    ['label' => 'Diagnosis', 'url' => route('diagnosis'), 'pattern' => 'diagnosis', 'icon' => 'chat'],
                 ];
             @endphp
 
-            <div class="site-nav" aria-label="Navigasi utama">
+            <div class="site-nav" id="siteNav" aria-label="Navigasi utama" data-site-nav>
                 @foreach ($navItems as $item)
                     @php($isActive = request()->routeIs($item['pattern']))
                     <a
@@ -36,6 +48,7 @@
                         class="site-nav__link {{ $isActive ? 'is-active' : '' }}"
                         @if($isActive) aria-current="page" @endif
                     >
+                        <span class="site-nav__icon" aria-hidden="true" data-icon="{{ $item['icon'] }}"></span>
                         {{ $item['label'] }}
                     </a>
                 @endforeach
@@ -75,6 +88,30 @@
         <span class="site-footer__dot" aria-hidden="true"></span>
         <span>Pemantauan gizi keluarga yang rapi dan mudah dipahami.</span>
     </footer>
+
+    <script>
+        (() => {
+            const toggle = document.querySelector('[data-nav-toggle]');
+            const nav = document.querySelector('[data-site-nav]');
+
+            if (!toggle || !nav) {
+                return;
+            }
+
+            toggle.addEventListener('click', () => {
+                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', String(!expanded));
+                nav.classList.toggle('is-open', !expanded);
+            });
+
+            nav.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    toggle.setAttribute('aria-expanded', 'false');
+                    nav.classList.remove('is-open');
+                });
+            });
+        })();
+    </script>
 
 </body>
 </html>

@@ -52,4 +52,18 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
         $response->assertRedirect('/');
     }
+
+    public function test_google_login_redirects_back_when_not_configured(): void
+    {
+        config([
+            'services.google.client_id' => null,
+            'services.google.client_secret' => null,
+        ]);
+
+        $response = $this->get('/auth/google/redirect');
+
+        $response
+            ->assertRedirect(route('login'))
+            ->assertSessionHas('error', 'Login Google belum dikonfigurasi. Gunakan email dan password terlebih dahulu.');
+    }
 }

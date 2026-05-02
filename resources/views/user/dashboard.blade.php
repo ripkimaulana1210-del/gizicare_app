@@ -15,6 +15,24 @@
     <div class="dashboard-welcome__badge">GiziCare</div>
 </section>
 
+<section class="dashboard-quick-stats" aria-label="Ringkasan dashboard">
+    <div>
+        <span>Ruang Kerja</span>
+        <strong>3</strong>
+        <p>alur utama</p>
+    </div>
+    <div>
+        <span>Status</span>
+        <strong>Aktif</strong>
+        <p>akun siap pakai</p>
+    </div>
+    <div>
+        <span>Mode</span>
+        <strong>Terarah</strong>
+        <p>belajar dan catat</p>
+    </div>
+</section>
+
 <div class="feature-grid">
     <a href="{{ route('edukasi.index') }}" class="feature-card feature-card--green">
         <span class="feature-card__icon" aria-hidden="true">

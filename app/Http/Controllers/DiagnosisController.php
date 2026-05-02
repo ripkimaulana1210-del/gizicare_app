@@ -12,8 +12,8 @@ class DiagnosisController extends Controller
     public function index()
     {
         return view('diagnosis.index', [
-            'aiReady' => filled(config('services.openai.api_key')),
-            'openAiModel' => config('services.openai.model', 'gpt-5-mini'),
+            'aiReady' => filled(config('services.gemini.api_key')),
+            'geminiModel' => config('services.gemini.model', 'gemini-2.5-flash'),
         ]);
     }
 
@@ -31,31 +31,38 @@ class DiagnosisController extends Controller
             'history.*.content' => ['required_with:history', 'string', 'max:1600'],
         ]);
 
-        $apiKey = config('services.openai.api_key');
+        $apiKey = config('services.gemini.api_key');
 
         if (blank($apiKey)) {
             return response()->json([
-                'message' => 'OPENAI_API_KEY belum diatur di file .env. Isi key lalu jalankan php artisan config:clear.',
+                'message' => 'GEMINI_API_KEY belum diatur di file .env. Isi key dari Google AI Studio lalu jalankan php artisan config:clear.',
             ], 503);
         }
 
-        $model = config('services.openai.model', 'gpt-5-mini');
-        $messages = $this->buildMessages(
+        $model = config('services.gemini.model', 'gemini-2.5-flash');
+        $contents = $this->buildContents(
             $validated['message'],
             $validated['profile'] ?? [],
             $validated['history'] ?? []
         );
 
         try {
-            $response = Http::withToken($apiKey)
+            $response = Http::withHeaders([
+                    'x-goog-api-key' => $apiKey,
+                ])
                 ->acceptJson()
                 ->asJson()
                 ->timeout(45)
-                ->post('https://api.openai.com/v1/responses', [
-                    'model' => $model,
-                    'instructions' => $this->systemInstructions(),
-                    'input' => $messages,
-                    'max_output_tokens' => 800,
+                ->post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent", [
+                    'system_instruction' => [
+                        'parts' => [
+                            ['text' => $this->systemInstructions()],
+                        ],
+                    ],
+                    'contents' => $contents,
+                    'generationConfig' => [
+                        'maxOutputTokens' => 800,
+                    ],
                 ]);
         } catch (\Throwable $exception) {
             Log::warning('Diagnosis AI request failed before response.', [
@@ -69,7 +76,8 @@ class DiagnosisController extends Controller
 
         if ($response->failed()) {
             $error = $response->json('error') ?? [];
-            $errorCode = $error['code'] ?? $error['type'] ?? null;
+            $errorStatus = $error['status'] ?? null;
+            $errorMessage = $error['message'] ?? null;
 
             Log::warning('Diagnosis AI returned an error.', [
                 'status' => $response->status(),
@@ -77,8 +85,8 @@ class DiagnosisController extends Controller
             ]);
 
             return response()->json([
-                'message' => $this->openAiErrorMessage($response->status(), $errorCode),
-            ], $this->openAiStatusCode($response->status(), $errorCode));
+                'message' => $this->geminiErrorMessage($response->status(), $errorStatus, $errorMessage),
+            ], $this->geminiStatusCode($response->status(), $errorStatus, $errorMessage));
         }
 
         $reply = $this->extractOutputText($response->json() ?? []);
@@ -95,27 +103,33 @@ class DiagnosisController extends Controller
         ]);
     }
 
-    private function buildMessages(string $message, array $profile, array $history): array
+    private function buildContents(string $message, array $profile, array $history): array
     {
-        $messages = [];
+        $contents = [];
 
         foreach (array_slice($history, -6) as $item) {
             if (! isset($item['role'], $item['content'])) {
                 continue;
             }
 
-            $messages[] = [
-                'role' => $item['role'],
-                'content' => $item['content'],
+            $contents[] = [
+                'role' => $item['role'] === 'assistant' ? 'model' : 'user',
+                'parts' => [
+                    ['text' => $item['content']],
+                ],
             ];
         }
 
-        $messages[] = [
+        $userText = trim($this->formatProfile($profile) . "\n\nKeluhan atau pertanyaan:\n" . $message);
+
+        $contents[] = [
             'role' => 'user',
-            'content' => trim($this->formatProfile($profile) . "\n\nKeluhan atau pertanyaan:\n" . $message),
+            'parts' => [
+                ['text' => $userText],
+            ],
         ];
 
-        return $messages;
+        return $contents;
     }
 
     private function formatProfile(array $profile): string
@@ -134,7 +148,7 @@ class DiagnosisController extends Controller
             ->all();
 
         if (empty($filledRows)) {
-            return 'Profil anak: belum diisi.';
+            return '';
         }
 
         return "Profil anak:\n" . implode("\n", $filledRows);
@@ -161,16 +175,12 @@ PROMPT;
 
     private function extractOutputText(array $data): string
     {
-        if (isset($data['output_text']) && is_string($data['output_text'])) {
-            return trim($data['output_text']);
-        }
-
         $parts = [];
 
-        foreach ($data['output'] ?? [] as $output) {
-            foreach ($output['content'] ?? [] as $content) {
-                if (isset($content['text']) && is_string($content['text'])) {
-                    $parts[] = $content['text'];
+        foreach ($data['candidates'] ?? [] as $candidate) {
+            foreach ($candidate['content']['parts'] ?? [] as $part) {
+                if (isset($part['text']) && is_string($part['text'])) {
+                    $parts[] = $part['text'];
                 }
             }
         }
@@ -178,26 +188,29 @@ PROMPT;
         return trim(implode("\n", $parts));
     }
 
-    private function openAiErrorMessage(int $status, ?string $errorCode): string
+    private function geminiErrorMessage(int $status, ?string $errorStatus, ?string $errorMessage): string
     {
-        return match ($errorCode) {
-            'insufficient_quota' => 'API key sudah terbaca, tetapi kuota atau billing OpenAI belum aktif atau sudah habis. Cek Usage dan Billing di dashboard OpenAI.',
-            'invalid_api_key' => 'API key OpenAI tidak valid. Periksa kembali nilai OPENAI_API_KEY di file .env.',
-            'model_not_found' => 'Model OpenAI tidak tersedia untuk API key ini. Ganti OPENAI_MODEL di .env, lalu jalankan php artisan config:clear.',
-            'rate_limit_exceeded' => 'Batas request OpenAI sedang tercapai. Tunggu sebentar lalu coba lagi.',
+        $mentionsApiKey = is_string($errorMessage) && str_contains(strtolower($errorMessage), 'api key');
+
+        return match (true) {
+            $errorStatus === 'RESOURCE_EXHAUSTED' => 'Batas request Gemini sedang tercapai. Tunggu kuota reset atau cek limit di Google AI Studio.',
+            in_array($errorStatus, ['UNAUTHENTICATED', 'PERMISSION_DENIED'], true) || $mentionsApiKey => 'API key Gemini tidak valid atau belum punya akses. Periksa kembali nilai GEMINI_API_KEY di file .env.',
+            $errorStatus === 'NOT_FOUND' => 'Model Gemini tidak tersedia. Ganti GEMINI_MODEL di .env, lalu jalankan php artisan config:clear.',
             default => $status >= 500
                 ? 'Layanan AI sedang bermasalah. Coba lagi beberapa saat.'
-                : 'Layanan AI belum bisa menjawab sekarang. Periksa API key, model, atau billing OpenAI.',
+                : 'Layanan AI belum bisa menjawab sekarang. Periksa API key, model, atau limit Gemini.',
         };
     }
 
-    private function openAiStatusCode(int $status, ?string $errorCode): int
+    private function geminiStatusCode(int $status, ?string $errorStatus, ?string $errorMessage): int
     {
-        if ($errorCode === 'insufficient_quota' || $errorCode === 'rate_limit_exceeded') {
+        $mentionsApiKey = is_string($errorMessage) && str_contains(strtolower($errorMessage), 'api key');
+
+        if ($errorStatus === 'RESOURCE_EXHAUSTED') {
             return 429;
         }
 
-        if ($errorCode === 'invalid_api_key') {
+        if (in_array($errorStatus, ['UNAUTHENTICATED', 'PERMISSION_DENIED'], true) || $mentionsApiKey) {
             return 401;
         }
 

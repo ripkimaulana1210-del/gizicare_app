@@ -22,7 +22,7 @@ class QuizController extends Controller
 
     public function show()
     {
-        $soal = Quiz::inRandomOrder()->take(5)->get();
+        $soal = Quiz::inRandomOrder()->take(10)->get();
 
         if ($soal->isEmpty()) {
             return redirect()->route('quiz.index')->with('error', 'Belum ada soal quiz.');

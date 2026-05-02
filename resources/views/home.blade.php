@@ -12,6 +12,12 @@
         <p class="home-hero__copy">
             GiziCare menyatukan edukasi, pencatatan, dan diagnosis awal dalam satu ruang yang nyaman dipakai keluarga maupun pendamping posyandu.
         </p>
+        <div class="home-hero__tags" aria-label="Fokus GiziCare">
+            <span>Pertumbuhan</span>
+            <span>MPASI</span>
+            <span>Stunting</span>
+            <span>Anemia</span>
+        </div>
         <div class="home-hero__actions">
             @guest
                 <a href="{{ route('register') }}" class="btn-app btn-primary btn-large">
@@ -43,6 +49,23 @@
             <div class="hero-metric__label">Edukasi Aktif</div>
             <div class="hero-metric__value">12 topik</div>
             <div class="hero-metric__bar" style="--bar: 86%"><span></span></div>
+        </div>
+        <div class="hero-insight-card">
+            <div>
+                <span>Grafik Pertumbuhan</span>
+                <strong>+0.8 kg</strong>
+            </div>
+            <div class="hero-chart" aria-hidden="true">
+                <span style="height: 42%"></span>
+                <span style="height: 54%"></span>
+                <span style="height: 48%"></span>
+                <span style="height: 66%"></span>
+                <span style="height: 78%"></span>
+            </div>
+        </div>
+        <div class="hero-care-card">
+            <span>Fokus Hari Ini</span>
+            <strong>Catatan terbaru membantu arah edukasi berikutnya.</strong>
         </div>
     </div>
 </section>
@@ -99,4 +122,61 @@
         <p>Deteksi dini masalah gizi berdasarkan data dan gejala yang dialami.</p>
     </a>
 </div>
+
+<section class="home-dashboard-preview">
+    <div class="preview-copy">
+        <p>Dashboard keluarga</p>
+        <h2>Semua informasi penting tampil dalam pola yang mudah discan.</h2>
+        <span>Ringkasan status, riwayat catatan, edukasi, dan konsultasi awal dibuat saling terhubung.</span>
+    </div>
+    <div class="preview-board" aria-hidden="true">
+        <div class="preview-board__top">
+            <strong>Ringkasan Balita</strong>
+            <span>Aktif</span>
+        </div>
+        <div class="preview-board__grid">
+            <div>
+                <small>Berat</small>
+                <strong>12.5 kg</strong>
+            </div>
+            <div>
+                <small>Tinggi</small>
+                <strong>90 cm</strong>
+            </div>
+            <div>
+                <small>Status</small>
+                <strong>Normal</strong>
+            </div>
+        </div>
+        <div class="preview-timeline">
+            <span style="width: 42%"></span>
+            <span style="width: 68%"></span>
+            <span style="width: 84%"></span>
+        </div>
+    </div>
+</section>
+
+<section class="home-workflow">
+    <div class="home-workflow__intro">
+        <p>Ritme Pemantauan</p>
+        <h2>Dari data harian ke keputusan yang lebih tenang.</h2>
+    </div>
+    <div class="workflow-steps" aria-label="Alur pemantauan gizi">
+        <div class="workflow-step">
+            <span>01</span>
+            <strong>Catat</strong>
+            <p>Masukkan usia, berat, tinggi, dan riwayat pertumbuhan.</p>
+        </div>
+        <div class="workflow-step">
+            <span>02</span>
+            <strong>Pahami</strong>
+            <p>Baca materi yang sesuai dengan kondisi keluarga.</p>
+        </div>
+        <div class="workflow-step">
+            <span>03</span>
+            <strong>Tindak</strong>
+            <p>Gunakan arahan awal untuk menentukan langkah berikutnya.</p>
+        </div>
+    </div>
+</section>
 @endsection

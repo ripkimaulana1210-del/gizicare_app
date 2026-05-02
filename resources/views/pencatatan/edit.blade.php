@@ -13,12 +13,17 @@
 
         <div class="form-header">
             <h3>Edit Data</h3>
-            <p>Perbarui data pertumbuhan balita lalu simpan ulang hasil analisis.</p>
+            <p>Perbarui data pertumbuhan balita lalu hitung ulang status z-score WHO/UNICEF.</p>
         </div>
 
         <div class="form-group">
             <label>Nama</label>
             <input type="text" name="nama" value="{{ $item->nama }}" class="input-field">
+        </div>
+
+        <div class="form-group">
+            <label>Posyandu/Tempat</label>
+            <input type="text" name="posyandu" value="{{ old('posyandu', $item->posyandu ?? 'Umum') }}" class="input-field">
         </div>
 
         <div class="form-group">
@@ -39,7 +44,7 @@
                 <input type="number" step="0.1" name="bb" value="{{ $item->bb }}" class="input-field">
             </div>
             <div class="form-group">
-                <label>Tinggi (cm)</label>
+                <label>Panjang/Tinggi (cm)</label>
                 <input type="number" step="0.1" name="tb" value="{{ $item->tb }}" class="input-field">
             </div>
             <div class="form-group">

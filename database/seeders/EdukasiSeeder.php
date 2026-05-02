@@ -12,26 +12,34 @@ class EdukasiSeeder extends Seeder
         // MATERI
         $materi = [
             [
-                'judul' => '4 Sehat 5 Sempurna: Panduan Gizi Seimbang',
-                'konten' => '<h3>Apa itu 4 Sehat 5 Sempurna?</h3>
-<p>Konsep 4 Sehat 5 Sempurna adalah panduan makan sehari-hari yang terdiri dari:</p>
+                'judul' => 'Pedoman Gizi Seimbang: Isi Piringku untuk Keluarga',
+                'konten' => '<h3>Mengapa bukan hanya 4 Sehat 5 Sempurna?</h3>
+<p>Pedoman yang lebih baru menekankan gizi seimbang, variasi makanan, aktivitas fisik, kebersihan, dan pemantauan berat badan. Jadi fokusnya bukan sekadar menambah susu, tetapi memastikan makanan sehari-hari cukup, beragam, aman, dan sesuai kebutuhan.</p>
+
+<h3>Isi Piringku</h3>
+<p>Dalam satu kali makan, keluarga dapat memakai prinsip sederhana:</p>
 <ul>
-<li><strong>Nasi & umbi-umbian</strong> - Sumber energi utama</li>
-<li><strong>Lauk pauk</strong> - Sumber protein (ikan, telur, daging, tempe, tahu)</li>
-<li><strong>Sayur-sayuran</strong> - Sumber serat, vitamin, dan mineral</li>
-<li><strong>Buah-buahan</strong> - Sumber vitamin C dan antioksidan</li>
-<li><strong>Susu</strong> - Sumber kalsium untuk tulang dan gigi</li>
+<li><strong>Makanan pokok</strong>: nasi, jagung, kentang, ubi, atau sumber karbohidrat lain.</li>
+<li><strong>Lauk pauk</strong>: ikan, telur, ayam, daging, hati, tempe, tahu, atau kacang-kacangan.</li>
+<li><strong>Sayur</strong>: pilih warna beragam agar vitamin dan mineral lebih lengkap.</li>
+<li><strong>Buah</strong>: sumber vitamin, mineral, serat, dan cairan.</li>
 </ul>
-<h3>Tips Praktis</h3>
-<p>1. Variasikan menu setiap hari agar tidak bosan<br>
-2. Pilih sayur berwarna-warni (merah, hijau, kuning, ungu)<br>
-3. Batasi gula, garam, dan lemak berlebih<br>
-4. Minum air putih minimal 8 gelas sehari</p>',
+
+<h3>Empat Kebiasaan Pendukung</h3>
+<ol>
+<li>Makan beragam, tidak bergantung pada satu jenis makanan saja.</li>
+<li>Membiasakan perilaku hidup bersih, termasuk cuci tangan pakai sabun.</li>
+<li>Melakukan aktivitas fisik sesuai usia.</li>
+<li>Memantau berat badan dan pertumbuhan secara rutin.</li>
+</ol>
+
+<h3>Catatan untuk Balita</h3>
+<p>Balita membutuhkan makanan padat gizi. Jangan hanya memberi porsi besar karbohidrat; sertakan lauk sumber protein, terutama protein hewani bila tersedia, serta sayur dan buah sesuai kemampuan makan anak.</p>',
                 'tipe' => 'materi',
                 'kategori' => 'Gizi Dasar',
                 'gambar' => 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600',
-                'sumber' => 'Kemenkes RI',
-                'durasi_baca' => 5,
+                'sumber' => 'Kemenkes RI - Pedoman Gizi Seimbang',
+                'durasi_baca' => 7,
             ],
             [
                 'judul' => 'Stunting: Penyebab, Dampak, dan Pencegahan',
@@ -152,6 +160,187 @@ Sumber: Ikan salmon, sarden, makarel, kacang kenari.</p>
                 'sumber' => 'BPOM RI',
                 'durasi_baca' => 6,
             ],
+            [
+                'judul' => 'Standar UNICEF-WHO: Membaca Status Gizi Balita dari Z-score',
+                'konten' => '<h3>Mengapa memakai Z-score?</h3>
+<p>Z-score dipakai dalam standar pertumbuhan WHO untuk membandingkan hasil ukur anak dengan populasi rujukan internasional. Cara ini lebih kuat daripada hanya melihat berat badan atau tinggi badan secara terpisah.</p>
+
+<h3>Indikator yang Perlu Dicatat</h3>
+<ul>
+<li><strong>BB/U</strong>: berat badan menurut umur, membantu membaca underweight.</li>
+<li><strong>PB/U atau TB/U</strong>: panjang/tinggi badan menurut umur, dipakai untuk membaca stunting.</li>
+<li><strong>BB/PB atau BB/TB</strong>: berat badan menurut panjang/tinggi, dipakai untuk membaca wasting atau risiko gizi lebih.</li>
+<li><strong>IMT/U</strong>: indeks massa tubuh menurut umur, sering dipakai pada anak lebih besar.</li>
+</ul>
+
+<h3>Batas Interpretasi Umum</h3>
+<ul>
+<li>Z-score kurang dari -2 SD menandakan masalah gizi yang perlu perhatian.</li>
+<li>Z-score kurang dari -3 SD menandakan kondisi berat dan perlu tindak lanjut cepat.</li>
+<li>Stunting dibaca dari indikator PB/U atau TB/U, bukan dari berat badan saja.</li>
+<li>Wasting dibaca dari BB/PB atau BB/TB karena menggambarkan kondisi kurus akut.</li>
+</ul>
+
+<h3>Catatan untuk Posyandu</h3>
+<p>Data harus dicatat dengan umur yang tepat, jenis kelamin, berat, tinggi atau panjang badan, dan tempat pengukuran. Satu angka tidak cukup; tren dari bulan ke bulan jauh lebih berguna untuk melihat perlambatan pertumbuhan.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'Standar UNICEF-WHO',
+                'gambar' => 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=800',
+                'sumber' => 'WHO Child Growth Standards, UNICEF Nutrition',
+                'durasi_baca' => 9,
+            ],
+            [
+                'judul' => 'MPASI 6-23 Bulan: Keragaman Pangan dan Frekuensi Makan',
+                'konten' => '<h3>Prinsip MPASI yang Serius</h3>
+<p>MPASI dimulai saat bayi berusia 6 bulan, tetap disertai ASI, dan harus memenuhi empat prinsip: tepat waktu, cukup zat gizi, aman, serta diberikan secara responsif sesuai tanda lapar dan kenyang anak.</p>
+
+<h3>Minimal Keragaman Pangan</h3>
+<p>UNICEF dan WHO memakai keragaman kelompok pangan untuk menilai kualitas makan anak usia 6-23 bulan. Target praktisnya adalah anak mendapat minimal 5 dari 8 kelompok pangan dalam sehari.</p>
+<ul>
+<li>ASI.</li>
+<li>Karbohidrat pokok: nasi, jagung, kentang, ubi, roti.</li>
+<li>Kacang-kacangan dan biji-bijian.</li>
+<li>Produk susu: susu, yogurt, keju sesuai usia.</li>
+<li>Protein hewani: daging, ikan, ayam, hati.</li>
+<li>Telur.</li>
+<li>Buah dan sayur kaya vitamin A.</li>
+<li>Buah dan sayur lainnya.</li>
+</ul>
+
+<h3>Frekuensi Makan</h3>
+<ul>
+<li>Usia 6-8 bulan: 2-3 kali makan utama per hari.</li>
+<li>Usia 9-23 bulan: 3-4 kali makan utama per hari.</li>
+<li>Usia 12-24 bulan: dapat ditambah 1-2 selingan bergizi.</li>
+</ul>
+
+<h3>Yang Sering Terlewat</h3>
+<p>Anak tidak cukup hanya diberi bubur encer. Makanan perlu padat energi, mengandung protein hewani, lemak sehat, dan teksturnya naik bertahap sesuai kemampuan makan anak.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'MPASI',
+                'gambar' => 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800',
+                'sumber' => 'WHO Complementary Feeding, UNICEF Child Nutrition',
+                'durasi_baca' => 10,
+            ],
+            [
+                'judul' => 'Wasting dan Stunting: Bedanya, Risikonya, dan Kapan Harus Rujuk',
+                'konten' => '<h3>Bedanya Wasting dan Stunting</h3>
+<p><strong>Stunting</strong> adalah kondisi anak terlalu pendek untuk usianya akibat masalah gizi kronis atau berulang. <strong>Wasting</strong> adalah kondisi anak terlalu kurus untuk tinggi badannya dan sering mencerminkan masalah akut seperti asupan kurang, infeksi, atau keduanya.</p>
+
+<h3>Mengapa Tidak Boleh Disamakan?</h3>
+<ul>
+<li>Stunting menunjukkan masalah pertumbuhan jangka panjang.</li>
+<li>Wasting dapat memburuk cepat dan lebih dekat dengan risiko sakit berat.</li>
+<li>Anak bisa mengalami keduanya sekaligus, sehingga risikonya lebih tinggi.</li>
+</ul>
+
+<h3>Tanda yang Perlu Diwaspadai</h3>
+<ul>
+<li>Berat badan turun atau tidak naik berulang.</li>
+<li>Anak tampak sangat kurus, lemas, atau tidak aktif.</li>
+<li>Bengkak pada kedua punggung kaki.</li>
+<li>Diare, muntah, demam, batuk, atau infeksi berulang.</li>
+<li>Hasil pengukuran masuk kategori Z-score kurang dari -2 SD.</li>
+</ul>
+
+<h3>Apa yang Harus Dilakukan?</h3>
+<p>Lakukan pengukuran ulang dengan alat yang benar, cek riwayat makan dan sakit, lalu rujuk ke puskesmas bila ada tanda bahaya, penurunan berat badan, atau Z-score kurang dari -2 SD.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'Stunting dan Wasting',
+                'gambar' => 'https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800',
+                'sumber' => 'UNICEF Indonesia Nutrition, WHO Child Growth Standards',
+                'durasi_baca' => 8,
+            ],
+            [
+                'judul' => 'Anemia pada Ibu, Remaja Putri, dan Balita',
+                'konten' => '<h3>Mengapa Anemia Penting?</h3>
+<p>Anemia membuat tubuh kekurangan sel darah merah sehat sehingga oksigen tidak tersalurkan dengan optimal. Pada ibu hamil, anemia meningkatkan risiko bayi lahir dengan berat rendah. Pada anak, anemia dapat mengganggu konsentrasi, daya tahan tubuh, dan perkembangan.</p>
+
+<h3>Kelompok Berisiko</h3>
+<ul>
+<li>Ibu hamil dan menyusui.</li>
+<li>Remaja putri yang mulai menstruasi.</li>
+<li>Bayi dan balita dengan asupan zat besi rendah.</li>
+<li>Anak yang sering infeksi atau cacingan.</li>
+</ul>
+
+<h3>Sumber Zat Besi</h3>
+<ul>
+<li>Lebih mudah diserap: hati ayam, hati sapi, daging, ikan, ayam, telur.</li>
+<li>Sumber nabati: tempe, tahu, kacang hijau, sayur hijau.</li>
+<li>Bantu penyerapan dengan vitamin C dari jeruk, jambu, tomat, atau pepaya.</li>
+</ul>
+
+<h3>Hal yang Menghambat Penyerapan</h3>
+<p>Teh dan kopi dapat menghambat penyerapan zat besi bila diminum dekat waktu makan. Untuk ibu hamil atau remaja putri, konsumsi tablet tambah darah harus mengikuti arahan tenaga kesehatan.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'Anemia',
+                'gambar' => 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800',
+                'sumber' => 'UNICEF Maternal Nutrition, Kemenkes RI',
+                'durasi_baca' => 8,
+            ],
+            [
+                'judul' => 'Alur Pemantauan Posyandu: Dari Timbang sampai Tindak Lanjut',
+                'konten' => '<h3>Tujuan Pemantauan</h3>
+<p>Pemantauan pertumbuhan bukan hanya mengisi angka. Tujuannya adalah menemukan anak yang mulai melambat pertumbuhannya sebelum menjadi masalah gizi berat.</p>
+
+<h3>Data Minimal yang Perlu Dicatat</h3>
+<ul>
+<li>Nama anak, jenis kelamin, tanggal lahir, dan umur dalam bulan.</li>
+<li>Berat badan dengan satuan kilogram.</li>
+<li>Panjang atau tinggi badan dengan satuan sentimeter.</li>
+<li>Lingkar kepala bila usia dan layanan mensyaratkan.</li>
+<li>Nama posyandu atau tempat pencatatan.</li>
+<li>Tanggal pengukuran dan nama petugas bila tersedia.</li>
+</ul>
+
+<h3>Alur Praktis</h3>
+<ol>
+<li>Pastikan alat ukur nol dan anak diukur tanpa benda berat.</li>
+<li>Catat data segera setelah pengukuran.</li>
+<li>Lihat tren dibanding bulan sebelumnya.</li>
+<li>Beri konseling makan sesuai masalah yang ditemukan.</li>
+<li>Rujuk bila ada tanda bahaya, berat turun, atau hasil indikator masuk kategori bermasalah.</li>
+</ol>
+
+<h3>Mengapa Harus Dikelompokkan per Posyandu?</h3>
+<p>Pengelompokan per posyandu membantu kader melihat wilayah mana yang banyak memiliki risiko stunting, wasting, anemia, atau kenaikan berat badan tidak adekuat. Data ini berguna untuk menentukan prioritas kunjungan rumah dan edukasi.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'Posyandu',
+                'gambar' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800',
+                'sumber' => 'Kemenkes RI, UNICEF Indonesia',
+                'durasi_baca' => 7,
+            ],
+            [
+                'judul' => 'Isi Piring Balita: Fokus pada Padat Gizi, Bukan Sekadar Kenyang',
+                'konten' => '<h3>Masalah yang Sering Terjadi</h3>
+<p>Banyak anak tampak sudah makan banyak, tetapi makanan utamanya hanya karbohidrat encer. Anak bisa kenyang, namun tetap kurang protein, zat besi, zinc, lemak sehat, dan vitamin penting.</p>
+
+<h3>Komposisi Praktis</h3>
+<ul>
+<li><strong>Karbohidrat</strong>: nasi, kentang, ubi, jagung, roti, atau pasta.</li>
+<li><strong>Protein hewani</strong>: telur, ikan, ayam, daging, hati, atau susu sesuai usia.</li>
+<li><strong>Protein nabati</strong>: tempe, tahu, kacang merah, kacang hijau.</li>
+<li><strong>Sayur dan buah</strong>: pilih warna beragam.</li>
+<li><strong>Lemak sehat</strong>: minyak, santan secukupnya, alpukat, atau kacang yang aman sesuai usia.</li>
+</ul>
+
+<h3>Contoh Menu 1 Hari untuk Anak 1-2 Tahun</h3>
+<ul>
+<li>Pagi: nasi lembek, telur orak-arik, bayam, minyak sedikit.</li>
+<li>Siang: nasi, ikan kembung, tempe, wortel.</li>
+<li>Selingan: pisang atau pepaya, yogurt tawar bila cocok.</li>
+<li>Malam: kentang, ayam cincang, buncis, tahu.</li>
+</ul>
+
+<h3>Prinsip Responsif</h3>
+<p>Duduk bersama anak, beri waktu makan cukup, jangan memaksa, tetapi tetap dorong dengan sabar. Anak yang sakit sering butuh porsi kecil lebih sering dan perlu makan pemulihan setelah sembuh.</p>',
+                'tipe' => 'materi',
+                'kategori' => 'Gizi Balita',
+                'gambar' => 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800',
+                'sumber' => 'WHO Infant and Young Child Feeding, UNICEF Nutrition',
+                'durasi_baca' => 8,
+            ],
         ];
 
         // JURNAL
@@ -216,7 +405,90 @@ Sumber: Ikan salmon, sarden, makarel, kacang kenari.</p>
                 'pdf_url' => 'https://ejournal.almaata.ac.id/index.php/IJND/article/download/1273/pdfjg',
                 'durasi_baca' => 6,
             ],
+            [
+                'judul' => 'WHO Guideline for complementary feeding of infants and young children 6-23 months of age',
+                'ringkasan' => 'Pedoman global WHO tahun 2023 tentang MPASI anak usia 6-23 bulan, mencakup keragaman pangan, frekuensi makan, keamanan pangan, dan responsive feeding.',
+                'konten' => '<p>Pedoman WHO ini menjadi rujukan global untuk pemberian makanan pendamping ASI pada anak usia 6-23 bulan, baik anak yang masih menyusu maupun yang tidak menyusu.</p>
+<h3>Poin Penting</h3>
+<ul>
+<li>MPASI umumnya dimulai pada usia 6 bulan ketika ASI saja tidak lagi cukup memenuhi kebutuhan energi dan zat gizi.</li>
+<li>Makanan harus padat gizi, aman, bervariasi, dan meningkat teksturnya sesuai usia.</li>
+<li>Responsive feeding ditekankan: anak dibantu makan dengan sabar, tidak dipaksa, dan tanda lapar atau kenyang dihargai.</li>
+</ul>
+<h3>Relevansi untuk GiziCare</h3>
+<p>Pedoman ini mendukung fitur pencatatan usia, berat, tinggi, dan edukasi MPASI agar rekomendasi tidak hanya fokus pada angka, tetapi juga praktik makan harian.</p>',
+                'tipe' => 'jurnal',
+                'kategori' => 'Pedoman MPASI',
+                'gambar' => 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800',
+                'sumber' => 'World Health Organization, 2023',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=WHO+Guideline+complementary+feeding+infants+young+children+6-23+months+2023',
+                'pdf_url' => 'https://www.who.int/publications/i/item/9789240081864',
+                'durasi_baca' => 9,
+            ],
+            [
+                'judul' => 'Child Food Poverty: Nutrition deprivation in early childhood',
+                'ringkasan' => 'Laporan UNICEF 2024 tentang kemiskinan pangan anak, terutama anak yang tidak mendapat diet beragam pada masa awal kehidupan.',
+                'konten' => '<p>Laporan UNICEF ini membahas anak yang tidak mampu mengakses dan mengonsumsi makanan bergizi serta beragam pada usia dini. Isu ini sangat dekat dengan risiko stunting, wasting, dan hambatan perkembangan.</p>
+<h3>Poin Penting</h3>
+<ul>
+<li>Diet yang terlalu bergantung pada makanan pokok bertepung sering tidak cukup padat zat gizi.</li>
+<li>Protein hewani, telur, kacang-kacangan, buah, dan sayur penting untuk zat besi, zinc, vitamin A, protein, dan asam lemak esensial.</li>
+<li>Kualitas makan pada dua tahun pertama sangat menentukan pertumbuhan, daya tahan tubuh, dan perkembangan otak.</li>
+</ul>
+<h3>Relevansi untuk GiziCare</h3>
+<p>Materi ini mendukung edukasi keragaman pangan dan pencatatan risiko gizi berdasarkan wilayah posyandu atau tempat layanan.</p>',
+                'tipe' => 'jurnal',
+                'kategori' => 'Keragaman Pangan',
+                'gambar' => 'https://images.unsplash.com/photo-1543362906-acfc16c67564?w=800',
+                'sumber' => 'UNICEF Data, 2024',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=Child+Food+Poverty+Nutrition+deprivation+in+early+childhood+UNICEF+2024',
+                'pdf_url' => 'https://data.unicef.org/resources/child-food-poverty-report-2024/',
+                'durasi_baca' => 8,
+            ],
+            [
+                'judul' => 'Towards a future in Indonesia without child undernutrition',
+                'ringkasan' => 'Laporan Kementerian Kesehatan RI dan UNICEF tentang pengelolaan wasting dan penurunan stunting di Indonesia.',
+                'konten' => '<p>Laporan ini menekankan bahwa wasting dan stunting memiliki faktor risiko yang saling berhubungan. Anak yang mengalami salah satu bentuk undernutrition perlu dipantau karena risikonya dapat berkembang menjadi masalah gizi lain.</p>
+<h3>Poin Penting</h3>
+<ul>
+<li>Wasting mengancam kelangsungan hidup, pertumbuhan, dan perkembangan anak.</li>
+<li>Stunting dan wasting membutuhkan pencegahan, deteksi dini, serta tata laksana yang terhubung.</li>
+<li>Program perlu menjangkau layanan kesehatan, posyandu, keluarga, dan komunitas.</li>
+</ul>
+<h3>Relevansi untuk GiziCare</h3>
+<p>Fitur pencatatan per posyandu, grafik status gizi, dan ringkasan data anak dapat membantu kader melihat prioritas tindak lanjut.</p>',
+                'tipe' => 'jurnal',
+                'kategori' => 'Undernutrition Indonesia',
+                'gambar' => 'https://images.unsplash.com/photo-1576765607924-fae7b7b88f2a?w=800',
+                'sumber' => 'Kementerian Kesehatan RI dan UNICEF, 2024',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=Towards+a+future+in+Indonesia+without+child+undernutrition+UNICEF+Ministry+of+Health+2024',
+                'pdf_url' => 'https://www.unicef.org/indonesia/nutrition/reports/towards-future-indonesia-without-child-undernutrition',
+                'durasi_baca' => 9,
+            ],
+            [
+                'judul' => 'Nutrition in Indonesia: tackling the triple burden of malnutrition',
+                'ringkasan' => 'Ringkasan UNICEF Indonesia tentang tiga beban malnutrisi: undernutrition, defisiensi mikronutrien, dan overweight/obesity.',
+                'konten' => '<p>UNICEF Indonesia menjelaskan bahwa Indonesia menghadapi tiga beban malnutrisi sekaligus: stunting dan wasting, anemia atau kekurangan mikronutrien, serta gizi lebih.</p>
+<h3>Poin Penting</h3>
+<ul>
+<li>Masalah gizi tidak hanya stunting; wasting, anemia, dan gizi lebih juga harus dipantau.</li>
+<li>Praktik makan, ASI, MPASI, akses layanan, dan kondisi ibu berperan besar.</li>
+<li>Intervensi perlu mengikuti siklus hidup: ibu hamil, bayi, balita, anak sekolah, dan remaja.</li>
+</ul>
+<h3>Relevansi untuk GiziCare</h3>
+<p>Konten ini menjadi dasar agar edukasi, quiz, dan pencatatan tidak hanya membahas berat badan, tetapi juga kualitas diet, anemia, serta risiko gizi lebih.</p>',
+                'tipe' => 'jurnal',
+                'kategori' => 'Triple Burden',
+                'gambar' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800',
+                'sumber' => 'UNICEF Indonesia',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=UNICEF+Indonesia+triple+burden+malnutrition+nutrition',
+                'pdf_url' => 'https://www.unicef.org/indonesia/nutrition',
+                'durasi_baca' => 7,
+            ],
         ];
+
+        Edukasi::where('judul', '4 Sehat 5 Sempurna: Panduan Gizi Seimbang')
+            ->update(['judul' => 'Pedoman Gizi Seimbang: Isi Piringku untuk Keluarga']);
 
         foreach ($materi as $item) {
             Edukasi::updateOrCreate(
@@ -225,10 +497,11 @@ Sumber: Ikan salmon, sarden, makarel, kacang kenari.</p>
             );
         }
 
-        Edukasi::where('tipe', 'jurnal')->delete();
-
         foreach ($jurnal as $item) {
-            Edukasi::create($item);
+            Edukasi::updateOrCreate(
+                ['judul' => $item['judul']],
+                $item
+            );
         }
     }
 }
