@@ -12,10 +12,13 @@ class Edukasi extends Model
     protected $fillable = [
         'judul',
         'konten',
+        'ringkasan',
         'tipe',
         'kategori',
         'gambar',
         'sumber',
+        'google_scholar_url',
+        'pdf_url',
         'durasi_baca',
     ];
 

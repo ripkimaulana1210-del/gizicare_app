@@ -13,6 +13,7 @@
 
         <div class="form-header">
             <h3>Edit Data</h3>
+            <p>Perbarui data pertumbuhan balita lalu simpan ulang hasil analisis.</p>
         </div>
 
         <div class="form-group">
@@ -29,10 +30,22 @@
         </div>
 
         <div class="form-grid">
-            <input type="number" name="umur" value="{{ $item->umur }}" class="input-field">
-            <input type="number" step="0.1" name="bb" value="{{ $item->bb }}" class="input-field">
-            <input type="number" step="0.1" name="tb" value="{{ $item->tb }}" class="input-field">
-            <input type="number" step="0.1" name="lk" value="{{ $item->lk }}" class="input-field">
+            <div class="form-group">
+                <label>Usia (bulan)</label>
+                <input type="number" name="umur" value="{{ $item->umur }}" class="input-field">
+            </div>
+            <div class="form-group">
+                <label>Berat (kg)</label>
+                <input type="number" step="0.1" name="bb" value="{{ $item->bb }}" class="input-field">
+            </div>
+            <div class="form-group">
+                <label>Tinggi (cm)</label>
+                <input type="number" step="0.1" name="tb" value="{{ $item->tb }}" class="input-field">
+            </div>
+            <div class="form-group">
+                <label>Lingkar Kepala (opsional)</label>
+                <input type="number" step="0.1" name="lk" value="{{ $item->lk }}" class="input-field">
+            </div>
         </div>
 
         <button class="btn-submit">Update</button>

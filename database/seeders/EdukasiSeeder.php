@@ -16,11 +16,11 @@ class EdukasiSeeder extends Seeder
                 'konten' => '<h3>Apa itu 4 Sehat 5 Sempurna?</h3>
 <p>Konsep 4 Sehat 5 Sempurna adalah panduan makan sehari-hari yang terdiri dari:</p>
 <ul>
-<li><strong>Nasi & umbi-umbian</strong> → Sumber energi utama</li>
-<li><strong>Lauk pauk</strong> → Sumber protein (ikan, telur, daging, tempe, tahu)</li>
-<li><strong>Sayur-sayuran</strong> → Sumber serat, vitamin, dan mineral</li>
-<li><strong>Buah-buahan</strong> → Sumber vitamin C dan antioksidan</li>
-<li><strong>Susu</strong> → Sumber kalsium untuk tulang dan gigi</li>
+<li><strong>Nasi & umbi-umbian</strong> - Sumber energi utama</li>
+<li><strong>Lauk pauk</strong> - Sumber protein (ikan, telur, daging, tempe, tahu)</li>
+<li><strong>Sayur-sayuran</strong> - Sumber serat, vitamin, dan mineral</li>
+<li><strong>Buah-buahan</strong> - Sumber vitamin C dan antioksidan</li>
+<li><strong>Susu</strong> - Sumber kalsium untuk tulang dan gigi</li>
 </ul>
 <h3>Tips Praktis</h3>
 <p>1. Variasikan menu setiap hari agar tidak bosan<br>
@@ -53,11 +53,11 @@ class EdukasiSeeder extends Seeder
 <li>Produktivitas kerja rendah saat dewasa</li>
 </ul>
 <h3>Cara Mencegah</h3>
-<p>✅ Konsumsi makanan bergizi sejak hamil<br>
-✅ ASI eksklusif 6 bulan, dilanjutkan sampai 2 tahun<br>
-✅ Berikan MPASI bergizi lengkap dan higienis<br>
-✅ Rutin ke Posyandu untuk pemantauan pertumbuhan<br>
-✅ Jaga kebersihan lingkungan dan cuci tangan pakai sabun</p>',
+<p>- Konsumsi makanan bergizi sejak hamil<br>
+- ASI eksklusif 6 bulan, dilanjutkan sampai 2 tahun<br>
+- Berikan MPASI bergizi lengkap dan higienis<br>
+- Rutin ke Posyandu untuk pemantauan pertumbuhan<br>
+- Jaga kebersihan lingkungan dan cuci tangan pakai sabun</p>',
                 'tipe' => 'materi',
                 'kategori' => 'Kesehatan Anak',
                 'gambar' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600',
@@ -134,18 +134,18 @@ Sumber: Ikan salmon, sarden, makarel, kacang kenari.</p>
 
 <h3>Komponen Label Gizi</h3>
 <ul>
-<li><strong>Informasi Nilai Gizi (ING)</strong> → Jumlah energi, protein, lemak, karbohidrat per saji</li>
-<li><strong>% AKG (Angka Kecukupan Gizi)</strong> → Persentase kebutuhan gizi harian yang terpenuhi per saji</li>
-<li><strong>Daftar Bahan</strong> → Bahan utama disebutkan pertama, semakin pendek daftar biasanya semakin baik</li>
-<li><strong>Tanggal kedaluwarsa</strong> → Pastikan masih segar</li>
+<li><strong>Informasi Nilai Gizi (ING)</strong> - Jumlah energi, protein, lemak, karbohidrat per saji</li>
+<li><strong>% AKG (Angka Kecukupan Gizi)</strong> - Persentase kebutuhan gizi harian yang terpenuhi per saji</li>
+<li><strong>Daftar Bahan</strong> - Bahan utama disebutkan pertama, semakin pendek daftar biasanya semakin baik</li>
+<li><strong>Tanggal kedaluwarsa</strong> - Pastikan masih segar</li>
 </ul>
 
 <h3>Tips Memilih Makanan Sehat</h3>
-<p>✅ Pilih produk dengan gula < 10g per saji<br>
-✅ Garam (natrium) < 200mg per saji<br>
-✅ Lemak jenuh < 2g per saji<br>
-✅ Serat > 3g per saji<br>
-❌ Hindari bahan tambahan pangan (BTP) berlebihan</p>',
+<p>- Pilih produk dengan gula < 10g per saji<br>
+- Garam (natrium) < 200mg per saji<br>
+- Lemak jenuh < 2g per saji<br>
+- Serat > 3g per saji<br>
+- Hindari bahan tambahan pangan (BTP) berlebihan</p>',
                 'tipe' => 'materi',
                 'kategori' => 'Gizi Dasar',
                 'gambar' => 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600',
@@ -157,71 +157,78 @@ Sumber: Ikan salmon, sarden, makarel, kacang kenari.</p>
         // JURNAL
         $jurnal = [
             [
-                'judul' => 'Hubungan Antara Konsumsi Sayur dan Buah dengan Status Gizi Balita di Indonesia',
-                'konten' => '<p>Penelitian ini menganalisis data Riskesdas 2018 untuk melihat hubungan konsumsi sayur dan buah dengan status gizi balita di 34 provinsi Indonesia.</p>
-<h3>Hasil Utama</h3>
+                'judul' => 'Keragaman pangan, pola asuh makan dan kejadian stunting pada balita usia 24-59 bulan',
+                'ringkasan' => 'PDF resmi Jurnal Gizi Indonesia. Visual sayur-buah dipilih karena artikel ini menekankan keragaman pangan dan pola asuh makan sebagai faktor yang berhubungan dengan stunting balita.',
+                'konten' => '<p>Artikel ini meneliti hubungan keragaman pangan dan pola asuh makan dengan kejadian stunting pada balita usia 24-59 bulan di Kecamatan Bayat, Kabupaten Klaten.</p>
+<h3>Ringkasan Artikel</h3>
 <ul>
-<li>Hanya 23,5% balita Indonesia yang mengonsumsi sayur dan buah sesuai anjuran</li>
-<li>Balita dengan konsumsi sayur & buah adekuat memiliki risiko stunting 40% lebih rendah</li>
-<li>Faktor penghambat: harga, ketersediaan musiman, dan kebiasaan orang tua</li>
+<li>Desain penelitian menggunakan cross-sectional study dengan 100 balita.</li>
+<li>Keragaman pangan diukur menggunakan Individual Dietary Diversity Score (IDDS).</li>
+<li>Hasil menunjukkan hubungan antara panjang badan lahir, pola asuh makan, dan keragaman pangan dengan stunting.</li>
 </ul>
-<h3>Kesimpulan</h3>
-<p>Intervensi pendidikan gizi pada orang tua dan program kebun sayur keluarga dapat meningkatkan konsumsi sayur dan buah balita secara signifikan.</p>',
+<h3>Kesimpulan Singkat</h3>
+<p>Keragaman pangan menjadi salah satu faktor dominan yang berhubungan dengan kejadian stunting pada balita.</p>',
                 'tipe' => 'jurnal',
-                'kategori' => 'Penelitian Gizi',
-                'gambar' => null,
-                'sumber' => 'Jurnal Gizi Klinik Indonesia, Vol 15 No 2 (2023)',
-                'durasi_baca' => 12,
+                'kategori' => 'Stunting Balita',
+                'gambar' => 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800',
+                'sumber' => 'Jurnal Gizi Indonesia, Vol 7 No 1 (2018), pp. 22-29',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=%22Keragaman+pangan%2C+pola+asuh+makan+dan+kejadian+stunting+pada+balita+usia+24-59+bulan%22',
+                'pdf_url' => 'https://ejournal.undip.ac.id/index.php/jgi/article/download/20025/14467',
+                'durasi_baca' => 8,
             ],
             [
-                'judul' => 'Dampak Program Pemberian Makanan Tambahan (PMT) terhadap Perbaikan Status Gizi Anak Sekolah',
-                'konten' => '<p>Studi quasi-experimental ini dilakukan di 20 sekolah dasar di Jawa Barat selama 6 bulan untuk mengevaluasi efektivitas program PMT.</p>
-<h3>Metode</h3>
-<p>Kelompok intervensi (n=240) menerima PMT berupa biskuit fortifikasi + susu 3x seminggu. Kelompok kontrol (n=240) hanya mendapat edukasi gizi.</p>
-<h3>Hasil</h3>
+                'judul' => 'Pengaruh pendidikan gizi terhadap pengetahuan, praktik gizi seimbang dan status gizi pada anak sekolah dasar',
+                'ringkasan' => 'PDF resmi Jurnal Gizi Indonesia. Visual bekal sehat dipakai karena artikel membahas pendidikan gizi, praktik membawa makanan gizi seimbang, dan status gizi siswa sekolah dasar.',
+                'konten' => '<p>Artikel ini mengevaluasi pengaruh pendidikan gizi terhadap pengetahuan gizi, praktik gizi seimbang, dan status gizi anak sekolah dasar.</p>
+<h3>Ringkasan Artikel</h3>
 <ul>
-<li>Kenaikan BB kelompok intervensi: rata-rata 1,8 kg</li>
-<li>Kenaikan BB kelompok kontrol: rata-rata 0,9 kg</li>
-<li>Perbedaan bermakna secara statistik (p kurang dari 0,05)</li>
-<li>Kehadiran sekolah meningkat 15% pada kelompok intervensi</li>
+<li>Penelitian dilakukan pada siswa SDN Paringin 2, Kalimantan Selatan.</li>
+<li>Intervensi berupa pendidikan gizi tentang Pedoman Gizi Seimbang.</li>
+<li>Hasil menunjukkan peningkatan pengetahuan gizi setelah intervensi.</li>
 </ul>
-<h3>Rekomendasi</h3>
-<p>Program PMT perlu diintegrasikan dengan edukasi gizi dan keterlibatan orang tua untuk keberlanjutan.</p>',
+<h3>Kesimpulan Singkat</h3>
+<p>Pendidikan gizi membantu meningkatkan pengetahuan anak sekolah, meskipun perubahan praktik dan status gizi membutuhkan pendampingan lebih lanjut.</p>',
                 'tipe' => 'jurnal',
-                'kategori' => 'Intervensi Gizi',
-                'gambar' => null,
-                'sumber' => 'Jurnal Kesehatan Masyarakat Nasional, Vol 18 No 1 (2024)',
-                'durasi_baca' => 15,
+                'kategori' => 'Edukasi Anak Sekolah',
+                'gambar' => 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800',
+                'sumber' => 'Jurnal Gizi Indonesia, Vol 6 No 1 (2017), pp. 58-64',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=%22Pengaruh+pendidikan+gizi+terhadap+pengetahuan%2C+praktik+gizi+seimbang+dan+status+gizi+pada+anak+sekolah+dasar%22',
+                'pdf_url' => 'https://ejournal.undip.ac.id/index.php/jgi/article/download/17757/12614',
+                'durasi_baca' => 7,
             ],
             [
-                'judul' => 'Prevalensi Anemia pada Remaja Putri dan Hubungannya dengan Konsumsi Tablet Tambah Darah',
-                'konten' => '<p>Survei cross-sectional pada 1.200 remaja putri usia 15-18 tahun di 10 SMA di Yogyakarta.</p>
-<h3>Temuan</h3>
+                'judul' => 'A nutrition diary-book effectively increase knowledge and adherence of iron tablet consumption among adolescent female students',
+                'ringkasan' => 'PDF resmi Jurnal Gizi dan Dietetik Indonesia. Visual tablet suplemen dipakai karena artikel ini berfokus pada kepatuhan konsumsi tablet zat besi pada remaja putri.',
+                'konten' => '<p>Artikel ini menilai pengaruh edukasi melalui buku diary gizi terhadap pengetahuan, minat mencari tablet zat besi, dan kepatuhan konsumsi tablet zat besi pada remaja putri.</p>
+<h3>Ringkasan Artikel</h3>
 <ul>
-<li>Prevalensi anemia: 32,4% (mild 22%, moderate 9%, severe 1,4%)</li>
-<li>Hanya 18% remaja yang rutin minum TTD (Tablet Tambah Darah)</li>
-<li>Remaja dengan konsumsi TTD rutin memiliki hemoglobin rata-rata 12,8 g/dL vs 10,9 g/dL pada yang tidak rutin</li>
+<li>Desain penelitian quasi experimental dengan kelompok intervensi dan kontrol.</li>
+<li>Kelompok intervensi mendapat tablet zat besi dan buku Diary Gizi.</li>
+<li>Kelompok dengan buku Diary Gizi menunjukkan pengetahuan dan kepatuhan konsumsi tablet zat besi yang lebih baik.</li>
 </ul>
-<h3>Faktor Penghambat Konsumsi TTD</h3>
-<ol>
-<li>Efek samping (mual, konstipasi)</li>
-<li>Lupa meminum</li>
-<li>Kurangnya informasi dari tenaga kesehatan</li>
-<li>Stigma negatif tentang TTD</li>
-</ol>
-<h3>Saran</h3>
-<p>Pendekatan peer education dan reminder digital (WhatsApp) terbukti efektif meningkatkan kepatuhan konsumsi TTD hingga 65%.</p>',
+<h3>Kesimpulan Singkat</h3>
+<p>Buku Diary Gizi dapat menjadi media edukasi untuk meningkatkan kepatuhan konsumsi tablet zat besi pada remaja putri.</p>',
                 'tipe' => 'jurnal',
-                'kategori' => 'Gizi Remaja',
-                'gambar' => null,
-                'sumber' => 'Jurnal Gizi dan Dietetik Indonesia, Vol 9 No 3 (2023)',
-                'durasi_baca' => 14,
+                'kategori' => 'Anemia Remaja',
+                'gambar' => 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800',
+                'sumber' => 'Jurnal Gizi dan Dietetik Indonesia, Vol 8 No 2 (2020), pp. 87-92',
+                'google_scholar_url' => 'https://scholar.google.com/scholar?q=%22A+nutrition+diary-book+effectively+increase+knowledge+and+adherence+of+iron+tablet+consumption+among+adolescent+female+students%22',
+                'pdf_url' => 'https://ejournal.almaata.ac.id/index.php/IJND/article/download/1273/pdfjg',
+                'durasi_baca' => 6,
             ],
         ];
 
-        foreach (array_merge($materi, $jurnal) as $item) {
+        foreach ($materi as $item) {
+            Edukasi::updateOrCreate(
+                ['judul' => $item['judul']],
+                $item
+            );
+        }
+
+        Edukasi::where('tipe', 'jurnal')->delete();
+
+        foreach ($jurnal as $item) {
             Edukasi::create($item);
         }
     }
 }
-

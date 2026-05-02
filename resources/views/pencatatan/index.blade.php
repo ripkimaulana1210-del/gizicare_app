@@ -7,7 +7,17 @@
 @section('content')
 <div class="container-form">
 
-    {{-- ALERT --}}
+    <div class="greeting-banner pencatatan-banner">
+        <div class="greeting-text">
+            <div class="greeting-sub">Pemantauan Balita</div>
+            <div class="greeting-title">Catat data pertumbuhan dengan alur yang rapi.</div>
+        </div>
+        <div class="greeting-badge">
+            <div class="greeting-badge-value">{{ $data->count() }}</div>
+            <div class="greeting-badge-label">catatan</div>
+        </div>
+    </div>
+
     @if ($errors->any())
         <div class="alert-error">
             @foreach ($errors->all() as $error)
@@ -16,13 +26,16 @@
         </div>
     @endif
 
-    {{-- FORM --}}
+    @if (session('success'))
+        <div class="auth-status">{{ session('success') }}</div>
+    @endif
+
     <form method="POST" action="{{ route('pencatatan.store') }}" class="form-card">
         @csrf
 
         <div class="form-header">
             <h3>Input Data Balita</h3>
-            <p>Masukkan data lengkap untuk analisis gizi</p>
+            <p>Masukkan data lengkap untuk membantu pemantauan status gizi.</p>
         </div>
 
         {{-- Nama --}}
@@ -76,8 +89,13 @@
         </button>
     </form>
 
-    {{-- TABLE --}}
-    <h3 class="mt-6">Riwayat Data</h3>
+    <div class="content-section-title">
+        <div>
+            <p>Riwayat</p>
+            <h3>Data Balita</h3>
+        </div>
+        <span>{{ $data->count() }} catatan</span>
+    </div>
 
     <div class="table-wrapper">
         <table class="custom-table">
@@ -107,7 +125,7 @@
                         <td>{{ $item->imt }}</td>
 
                         <td>
-                            <span class="badge {{ strtolower($item->status) }}">
+                            <span class="badge {{ \Illuminate\Support\Str::slug($item->status) }}">
                                 {{ $item->status }}
                             </span>
                         </td>
@@ -126,8 +144,8 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" style="text-align:center; padding:20px;">
-                            Belum ada data
+                        <td colspan="9">
+                            <div class="empty-state">Belum ada data.</div>
                         </td>
                     </tr>
                 @endforelse

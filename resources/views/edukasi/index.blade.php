@@ -5,91 +5,138 @@
 @endsection
 
 @section('content')
-<div class="container-form">
-    {{-- Hero --}}
+<div class="container-form learning-page">
     <div class="edukasi-hero">
-        <h3>Belajar Gizi Sehat</h3>
-        <p>Tingkatkan pengetahuan gizi untuk menjaga kesehatan keluarga.</p>
+        <div>
+            <p class="hero-kicker">Pusat Edukasi</p>
+            <h3>Belajar gizi sehat dari materi yang ringkas dan mudah ditindaklanjuti.</h3>
+            <p>Tingkatkan pengetahuan keluarga lewat materi praktis, jurnal pilihan, dan topik yang relevan dengan pemantauan balita.</p>
+        </div>
+        <div class="hero-summary" aria-label="Ringkasan edukasi">
+            <strong>{{ $materi->count() + $jurnal->count() }}</strong>
+            <span>konten tersedia</span>
+        </div>
     </div>
 
-    {{-- Kategori filter --}}
     @if($kategori->count() > 0)
-    <div class="flex flex-wrap gap-2 mt-6 mb-4">
-        <span class="px-4 py-2 rounded-full bg-green-600 text-white text-sm font-semibold">Semua</span>
+    <div class="chip-row" aria-label="Kategori edukasi">
+        <span class="chip is-active">Semua</span>
         @foreach($kategori as $kat)
-            <span class="px-4 py-2 rounded-full bg-white text-green-700 text-sm font-semibold border border-green-100 hover:bg-green-50 cursor-pointer transition-all">{{ $kat }}</span>
+            <span class="chip">{{ $kat }}</span>
         @endforeach
     </div>
     @endif
 
-    {{-- Materi --}}
-    <div class="flex items-center justify-between mt-8 mb-4">
-        <h3 class="section-title text-lg">Materi Gizi</h3>
-        <span class="text-sm text-gray-400">{{ $materi->count() }} materi</span>
+    <div class="content-section-title">
+        <div>
+            <p>Materi Praktis</p>
+            <h3>Materi Gizi</h3>
+        </div>
+        <span>{{ $materi->count() }} materi</span>
     </div>
 
     <div class="grid-edukasi">
         @forelse ($materi as $item)
-            <a href="{{ route('edukasi.show', $item->id) }}" class="card-edukasi group">
-                @if($item->gambar)
-                    <img src="{{ $item->gambar }}" class="w-full h-40 object-cover mb-3" alt="{{ $item->judul }}">
-                @endif
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="badge-type materi">Materi</span>
-                    @if($item->kategori)
-                        <span class="text-xs text-gray-400">{{ $item->kategori }}</span>
+            <a href="{{ route('edukasi.show', $item->id) }}" class="card-edukasi article-card">
+                <div class="article-card__media">
+                    @if($item->gambar)
+                        <img src="{{ $item->gambar }}" alt="{{ $item->judul }}">
+                    @else
+                        <span>{{ strtoupper(substr($item->kategori ?? 'Gizi', 0, 2)) }}</span>
                     @endif
                 </div>
-                <h4 class="font-bold text-gray-800 group-hover:text-green-700 transition-colors">{{ $item->judul }}</h4>
-                <p class="text-sm text-gray-500 mt-2">{{ Str::limit(strip_tags($item->konten), 100) }}</p>
-                <div class="flex items-center justify-between mt-3 text-xs text-gray-400">
+                <div class="article-card__meta">
+                    <span class="badge-type materi">Materi</span>
+                    @if($item->kategori)
+                        <span>{{ $item->kategori }}</span>
+                    @endif
+                </div>
+                <h4>{{ $item->judul }}</h4>
+                <p>{{ Str::limit(strip_tags($item->konten), 112) }}</p>
+                <div class="article-card__footer">
                     <span>{{ $item->durasi_baca ?? 5 }} menit</span>
-                    <span class="text-green-700 font-semibold">Baca selengkapnya</span>
+                    <strong>Baca</strong>
                 </div>
             </a>
         @empty
-            <p class="text-gray-500 col-span-full text-center py-8">Belum ada materi</p>
+            <div class="empty-state">Belum ada materi.</div>
         @endforelse
     </div>
 
-    {{-- Pencatatan CTA --}}
-    <div class="mt-8">
-        <div class="edukasi-cta">
-            <div>
-                <h3>Lanjutkan dengan Pencatatan</h3>
-                <p>Gunakan data pertumbuhan balita untuk memantau status gizi secara rutin.</p>
-            </div>
-            <a href="{{ route('pencatatan.index') }}" class="btn-app btn-light">Mulai Catat</a>
+    <div class="edukasi-cta">
+        <div>
+            <p class="hero-kicker">Langkah berikutnya</p>
+            <h3>Lanjutkan dengan pencatatan</h3>
+            <p>Gunakan data pertumbuhan balita untuk memantau status gizi secara rutin.</p>
         </div>
+        <a href="{{ route('pencatatan.index') }}" class="btn-app btn-light">
+            <span>Mulai Catat</span>
+            <span class="btn-arrow" aria-hidden="true">-></span>
+        </a>
     </div>
 
-    {{-- Jurnal --}}
-    <div class="flex items-center justify-between mt-10 mb-4">
-        <h3 class="section-title text-lg">Jurnal Ilmiah</h3>
-        <span class="text-sm text-gray-400">{{ $jurnal->count() }} jurnal</span>
+    <section class="edukasi-quiz-panel">
+        <div>
+            <p class="hero-kicker">Quiz Gizi</p>
+            <h3>Uji pemahaman setelah membaca materi.</h3>
+            <p>Ada {{ $totalQuiz }} soal pilihan ganda dari beberapa topik gizi. Mulai quiz dari sini tanpa keluar dari alur edukasi.</p>
+            @if($quizKategori->count() > 0)
+                <div class="quiz-mini-topics" aria-label="Topik quiz">
+                    @foreach($quizKategori->take(5) as $kat)
+                        <span>{{ $kat }}</span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+        <a href="{{ route('quiz.index') }}" class="btn-app btn-primary btn-large">
+            <span>Buka Quiz</span>
+            <span class="btn-arrow" aria-hidden="true">-></span>
+        </a>
+    </section>
+
+    <div class="content-section-title">
+        <div>
+            <p>Bacaan Pendukung</p>
+            <h3>Jurnal Ilmiah</h3>
+        </div>
+        <span>{{ $jurnal->count() }} jurnal</span>
     </div>
 
     <div class="grid-edukasi">
         @forelse ($jurnal as $item)
-            <a href="{{ route('edukasi.show', $item->id) }}" class="card-edukasi group">
-                <div class="flex items-center gap-2 mb-2">
+            @php($scholarUrl = $item->google_scholar_url ?: 'https://scholar.google.com/scholar?q=' . urlencode($item->judul))
+            @php($pdfUrl = $item->pdf_url ?: $scholarUrl)
+            <article class="card-edukasi article-card article-card--journal">
+                <a href="{{ route('edukasi.show', $item->id) }}" class="article-card__media">
+                    @if($item->gambar)
+                        <img src="{{ $item->gambar }}" alt="{{ $item->judul }}">
+                    @else
+                        <span>{{ strtoupper(substr($item->kategori ?? 'JR', 0, 2)) }}</span>
+                    @endif
+                </a>
+                <div class="article-card__meta">
                     <span class="badge-type jurnal">Jurnal</span>
                     @if($item->kategori)
-                        <span class="text-xs text-gray-400">{{ $item->kategori }}</span>
+                        <span>{{ $item->kategori }}</span>
                     @endif
                 </div>
-                <h4 class="font-bold text-gray-800 group-hover:text-blue-700 transition-colors">{{ $item->judul }}</h4>
-                <p class="text-sm text-gray-500 mt-2">{{ Str::limit(strip_tags($item->konten), 100) }}</p>
+                <h4>
+                    <a href="{{ route('edukasi.show', $item->id) }}">{{ $item->judul }}</a>
+                </h4>
+                <p>{{ $item->ringkasan ?: Str::limit(strip_tags($item->konten), 130) }}</p>
                 @if($item->sumber)
-                    <p class="text-xs text-gray-400 mt-3">Sumber: {{ $item->sumber }}</p>
+                    <p class="article-card__source">Sumber: {{ $item->sumber }}</p>
                 @endif
-                <div class="flex items-center justify-between mt-3 text-xs text-gray-400">
+                <div class="article-card__footer">
                     <span>{{ $item->durasi_baca ?? 10 }} menit</span>
-                    <span class="text-blue-700 font-semibold">Baca selengkapnya</span>
+                    <div class="article-card__links">
+                        <a href="{{ route('edukasi.show', $item->id) }}">Detail</a>
+                        <a href="{{ $scholarUrl }}" target="_blank" rel="noopener noreferrer" class="scholar-link">Cari PDF di Scholar</a>
+                    </div>
                 </div>
-            </a>
+            </article>
         @empty
-            <p class="text-gray-500 col-span-full text-center py-8">Belum ada jurnal</p>
+            <div class="empty-state">Belum ada jurnal.</div>
         @endforelse
     </div>
 </div>

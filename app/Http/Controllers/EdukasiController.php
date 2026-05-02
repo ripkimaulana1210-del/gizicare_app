@@ -13,8 +13,10 @@ class EdukasiController extends Controller
         $materi = Edukasi::where('tipe', 'materi')->latest()->get();
         $jurnal = Edukasi::where('tipe', 'jurnal')->latest()->get();
         $kategori = Edukasi::where('tipe', 'materi')->distinct()->pluck('kategori');
+        $totalQuiz = Quiz::count();
+        $quizKategori = Quiz::select('kategori')->distinct()->pluck('kategori');
 
-        return view('edukasi.index', compact('materi', 'jurnal', 'kategori'));
+        return view('edukasi.index', compact('materi', 'jurnal', 'kategori', 'totalQuiz', 'quizKategori'));
     }
 
     public function show($id)

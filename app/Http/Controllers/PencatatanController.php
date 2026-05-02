@@ -13,7 +13,7 @@ class PencatatanController extends Controller
         return view('pencatatan.index', compact('data'));
     }
 
-    // 🔥 FUNCTION INTI (biar gak ngulang code)
+    // Helper utama agar perhitungan status tidak berulang.
     private function hitungStatus($bb, $tb)
     {
         $imt = $bb / pow(($tb / 100), 2);
@@ -43,7 +43,6 @@ class PencatatanController extends Controller
         $bb = $request->bb;
         $tb = $request->tb;
 
-        // 🔥 pakai function
         [$imt, $status] = $this->hitungStatus($bb, $tb);
 
         Pencatatan::create([
@@ -80,7 +79,6 @@ class PencatatanController extends Controller
         $bb = $request->bb;
         $tb = $request->tb;
 
-        // 🔥 pakai function yang sama
         [$imt, $status] = $this->hitungStatus($bb, $tb);
 
         $data = Pencatatan::findOrFail($id);

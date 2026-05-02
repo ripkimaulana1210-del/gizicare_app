@@ -71,7 +71,9 @@
 
     {{-- Footer --}}
     <footer class="site-footer">
-        &copy; {{ date('Y') }} GiziCare
+        <span>&copy; {{ date('Y') }} GiziCare</span>
+        <span class="site-footer__dot" aria-hidden="true"></span>
+        <span>Pemantauan gizi keluarga yang rapi dan mudah dipahami.</span>
     </footer>
 
 </body>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PencatatanController;
 use App\Http\Controllers\EdukasiController;
+use App\Http\Controllers\DiagnosisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,10 @@ Route::get('/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->nam
 Route::get('/quiz/start', [\App\Http\Controllers\QuizController::class, 'show'])->name('quiz.show');
 Route::post('/quiz/submit', [\App\Http\Controllers\QuizController::class, 'submit'])->name('quiz.submit');
 
-Route::get('/diagnosis', function () {
-    return view('diagnosis.index');
-})->name('diagnosis');
+Route::get('/diagnosis', [DiagnosisController::class, 'index'])->name('diagnosis');
+Route::post('/diagnosis/chat', [DiagnosisController::class, 'chat'])
+    ->middleware('throttle:20,1')
+    ->name('diagnosis.chat');
 
 require __DIR__ . '/auth.php';
 

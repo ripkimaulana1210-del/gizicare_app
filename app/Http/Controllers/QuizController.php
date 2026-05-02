@@ -59,15 +59,16 @@ class QuizController extends Controller
         $total = count($soal);
         $score = $total > 0 ? round(($benar / $total) * 100) : 0;
 
-        QuizResult::create([
-            'user_id' => auth()->id(),
-            'total_soal' => $total,
-            'jawaban_benar' => $benar,
-            'score' => $score,
-            'detail_jawaban' => $detail,
-        ]);
+        if (auth()->check()) {
+            QuizResult::create([
+                'user_id' => auth()->id(),
+                'total_soal' => $total,
+                'jawaban_benar' => $benar,
+                'score' => $score,
+                'detail_jawaban' => $detail,
+            ]);
+        }
 
         return view('quiz.result', compact('benar', 'total', 'score', 'detail'));
     }
 }
-

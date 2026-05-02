@@ -1,22 +1,21 @@
 @extends('layouts.guest')
 
-@section('title', 'Konfirmasi Password — GiziCare')
+@section('title', 'Konfirmasi Password - GiziCare')
 
 @section('content')
-<h2 class="text-xl font-bold text-center text-gray-800 mb-5">Konfirmasi Password</h2>
+<h2 class="auth-title">Konfirmasi Password</h2>
+<p class="auth-copy">Masukkan password untuk melanjutkan tindakan ini.</p>
 
-<form method="POST" action="{{ route('password.confirm') }}">
+<form method="POST" action="{{ route('password.confirm') }}" class="auth-form">
     @csrf
-    <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input type="password" name="password" required autofocus
-               class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none text-sm">
-        @error('password')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+    <div class="auth-field">
+        <label>Password</label>
+        <input type="password" name="password" required autofocus class="auth-input">
+        @error('password')<p class="auth-error">{{ $message }}</p>@enderror
     </div>
 
-    <button type="submit" class="w-full py-2.5 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition text-sm">
+    <button type="submit" class="btn-app btn-primary btn-large w-full">
         Konfirmasi
     </button>
 </form>
 @endsection
-

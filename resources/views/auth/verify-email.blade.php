@@ -1,29 +1,28 @@
 @extends('layouts.guest')
 
-@section('title', 'Verifikasi Email — GiziCare')
+@section('title', 'Verifikasi Email - GiziCare')
 
 @section('content')
-<h2 class="text-xl font-bold text-center text-gray-800 mb-1">Verifikasi Email</h2>
-<p class="text-center text-sm text-gray-500 mb-5">Klik link di email untuk mengaktifkan akun</p>
+<h2 class="auth-title">Verifikasi Email</h2>
+<p class="auth-copy">Klik link di email untuk mengaktifkan akun GiziCare.</p>
 
 @if (session('status') == 'verification-link-sent')
-    <div class="mb-4 text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2">Link verifikasi baru telah dikirim.</div>
+    <div class="auth-status">Link verifikasi baru telah dikirim.</div>
 @endif
 
-<p class="text-sm text-gray-600 mb-5">Tidak menerima email? Klik tombol di bawah untuk mengirim ulang.</p>
+<p class="auth-copy">Tidak menerima email? Kirim ulang link verifikasi dari tombol di bawah.</p>
 
-<form method="POST" action="{{ route('verification.send') }}">
+<form method="POST" action="{{ route('verification.send') }}" class="auth-form">
     @csrf
-    <button type="submit" class="w-full py-2.5 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition text-sm mb-3">
+    <button type="submit" class="btn-app btn-primary btn-large w-full">
         Kirim Ulang Email
     </button>
 </form>
 
-<form method="POST" action="{{ route('logout') }}">
+<form method="POST" action="{{ route('logout') }}" class="auth-form auth-logout-form">
     @csrf
-    <button type="submit" class="w-full py-2.5 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+    <button type="submit" class="btn-app btn-ghost btn-large w-full">
         Logout
     </button>
 </form>
 @endsection
-
