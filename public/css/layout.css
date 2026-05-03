@@ -27,12 +27,20 @@
 .brand-mark {
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 10px;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
-        linear-gradient(135deg, var(--ds-green-900), var(--ds-teal-700));
+    display: inline-flex;
+    flex: 0 0 38px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
     box-shadow: 0 10px 22px rgba(11, 74, 45, 0.22);
+}
+
+.brand-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .brand-title {

@@ -1,4 +1,5 @@
 /* GiziCare stylesheet entrypoint.
+   Brand/logo styling lives in layout.css; SVG logo is served from public/images.
    Keep page styling in the modular files below instead of growing this file. */
 @import url("./legacy/app-legacy.css");
 @import url("./tokens.css");

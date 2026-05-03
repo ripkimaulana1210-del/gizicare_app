@@ -28,5 +28,36 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+    }
+
+    public function test_new_users_can_register_from_ngrok_forwarded_request(): void
+    {
+        $response = $this
+            ->withServerVariables([
+                'HTTP_HOST' => 'unburned-kitten-scoundrel.ngrok-free.dev',
+                'HTTPS' => 'on',
+                'HTTP_X_FORWARDED_HOST' => 'unburned-kitten-scoundrel.ngrok-free.dev',
+                'HTTP_X_FORWARDED_PROTO' => 'https',
+                'HTTP_X_FORWARDED_PORT' => '443',
+            ])
+            ->post('/register', [
+                'name' => 'Ngrok User',
+                'email' => 'ngrok-user@example.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
+            ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(RouteServiceProvider::HOME);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Ngrok User',
+            'email' => 'ngrok-user@example.com',
+        ]);
     }
 }
