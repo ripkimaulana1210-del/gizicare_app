@@ -146,6 +146,20 @@
         width: 100%;
     }
 
+    .form-actions,
+    .table-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .form-actions .btn-app,
+    .form-actions .btn-submit,
+    .table-actions .btn-edit,
+    .table-actions .btn-delete,
+    .table-actions form {
+        width: 100%;
+    }
+
     .chart-canvas-wrap,
     .chart-canvas-wrap canvas {
         height: 260px;

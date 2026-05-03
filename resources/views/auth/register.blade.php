@@ -6,7 +6,7 @@
 @php($googleReady = filled(config('services.google.client_id')) && filled(config('services.google.client_secret')))
 
 <h2 class="auth-title">Buat Akun</h2>
-<p class="auth-copy">Mulai pantau gizi keluarga dengan tampilan baru yang lebih segar.</p>
+<p class="auth-copy">Mulai pantau gizi keluarga dengan akun yang tersimpan rapi.</p>
 
 <form method="POST" action="{{ route('register') }}" class="auth-form">
     @csrf

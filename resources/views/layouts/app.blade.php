@@ -36,7 +36,7 @@
 
             @php
                 $navItems = [
-                    ['label' => 'Home', 'url' => route('home'), 'pattern' => 'home', 'icon' => 'home'],
+                    ['label' => 'Beranda', 'url' => route('home'), 'pattern' => 'home', 'icon' => 'home'],
                     ['label' => 'Edukasi', 'url' => route('edukasi.index'), 'pattern' => 'edukasi.*', 'icon' => 'book'],
                     ['label' => 'Pencatatan', 'url' => route('pencatatan.index'), 'pattern' => 'pencatatan.*', 'icon' => 'chart'],
                     ['label' => 'Diagnosis', 'url' => route('diagnosis'), 'pattern' => 'diagnosis', 'icon' => 'chat'],

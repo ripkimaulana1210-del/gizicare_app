@@ -30,6 +30,7 @@ class PencatatanGrowthStandardTest extends TestCase
         $record = Pencatatan::first();
 
         $this->assertNotNull($record);
+        $this->assertSame($user->id, $record->user_id);
         $this->assertSame('Posyandu Melati', $record->posyandu);
         $this->assertSame('Normal', $record->status);
         $this->assertSame('BB/TB', $record->indikator);
@@ -66,6 +67,7 @@ class PencatatanGrowthStandardTest extends TestCase
         $user = User::factory()->create();
 
         Pencatatan::create([
+            'user_id' => $user->id,
             'nama' => 'Ari',
             'posyandu' => 'Posyandu Melati',
             'jk' => 'L',
@@ -85,6 +87,7 @@ class PencatatanGrowthStandardTest extends TestCase
         ]);
 
         Pencatatan::create([
+            'user_id' => $user->id,
             'nama' => 'Bima',
             'posyandu' => 'Posyandu Mawar',
             'jk' => 'L',
@@ -111,5 +114,57 @@ class PencatatanGrowthStandardTest extends TestCase
         $response->assertSee('Ari');
         $response->assertSee('Posyandu Melati');
         $response->assertDontSee('Bima');
+    }
+
+    public function test_pencatatan_is_scoped_to_authenticated_user(): void
+    {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+
+        Pencatatan::create([
+            'user_id' => $user->id,
+            'nama' => 'Ari',
+            'posyandu' => 'Posyandu Melati',
+            'jk' => 'L',
+            'umur' => 24,
+            'bb' => 12.9,
+            'tb' => 90,
+            'lk' => 48,
+            'imt' => 15.93,
+            'status' => 'Normal',
+            'indikator' => 'BB/TB',
+            'z_score' => 0,
+            'standar' => 'WHO/UNICEF Weight-for-Height',
+            'indikator_stunting' => 'TB/U',
+            'z_score_stunting' => 0,
+            'status_stunting' => 'Normal',
+            'standar_stunting' => 'WHO/UNICEF Length/Height-for-Age',
+        ]);
+
+        Pencatatan::create([
+            'user_id' => $otherUser->id,
+            'nama' => 'Data Akun Lain',
+            'posyandu' => 'Posyandu Mawar',
+            'jk' => 'P',
+            'umur' => 24,
+            'bb' => 11,
+            'tb' => 88,
+            'lk' => 47,
+            'imt' => 14.2,
+            'status' => 'Normal',
+            'indikator' => 'BB/TB',
+            'z_score' => 0,
+            'standar' => 'WHO/UNICEF Weight-for-Height',
+            'indikator_stunting' => 'TB/U',
+            'z_score_stunting' => 0,
+            'status_stunting' => 'Normal',
+            'standar_stunting' => 'WHO/UNICEF Length/Height-for-Age',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('pencatatan.index'));
+
+        $response->assertOk();
+        $response->assertSee('Ari');
+        $response->assertDontSee('Data Akun Lain');
     }
 }

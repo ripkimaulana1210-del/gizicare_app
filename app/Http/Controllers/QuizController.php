@@ -10,14 +10,13 @@ class QuizController extends Controller
 {
     public function index()
     {
-        $kategori = Quiz::select('kategori')->distinct()->pluck('kategori');
         $totalSoal = Quiz::count();
         $history = QuizResult::where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
-        return view('quiz.index', compact('kategori', 'totalSoal', 'history'));
+        return view('quiz.index', compact('totalSoal', 'history'));
     }
 
     public function show()

@@ -26,7 +26,7 @@
             </svg>
         </span>
         <h3>Edukasi</h3>
-        <p>Kelola materi, jurnal, dan kategori konten.</p>
+        <p>Kelola materi dan jurnal edukasi.</p>
     </div>
     <div class="dashboard-card admin-card">
         <span class="feature-card__icon" aria-hidden="true">

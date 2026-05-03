@@ -34,40 +34,6 @@
         </div>
     </div>
 
-    <div class="home-hero__visual" aria-hidden="true">
-        <div class="hero-metric">
-            <div class="hero-metric__label">Status Gizi</div>
-            <div class="hero-metric__value">Normal</div>
-            <div class="hero-metric__bar" style="--bar: 78%"><span></span></div>
-        </div>
-        <div class="hero-metric">
-            <div class="hero-metric__label">Catatan Bulanan</div>
-            <div class="hero-metric__value">24 data</div>
-            <div class="hero-metric__bar" style="--bar: 64%"><span></span></div>
-        </div>
-        <div class="hero-metric">
-            <div class="hero-metric__label">Edukasi Aktif</div>
-            <div class="hero-metric__value">12 topik</div>
-            <div class="hero-metric__bar" style="--bar: 86%"><span></span></div>
-        </div>
-        <div class="hero-insight-card">
-            <div>
-                <span>Grafik Pertumbuhan</span>
-                <strong>+0.8 kg</strong>
-            </div>
-            <div class="hero-chart" aria-hidden="true">
-                <span style="height: 42%"></span>
-                <span style="height: 54%"></span>
-                <span style="height: 48%"></span>
-                <span style="height: 66%"></span>
-                <span style="height: 78%"></span>
-            </div>
-        </div>
-        <div class="hero-care-card">
-            <span>Fokus Hari Ini</span>
-            <strong>Catatan terbaru membantu arah edukasi berikutnya.</strong>
-        </div>
-    </div>
 </section>
 
 <div class="home-strip">
@@ -122,39 +88,6 @@
         <p>Deteksi dini masalah gizi berdasarkan data dan gejala yang dialami.</p>
     </a>
 </div>
-
-<section class="home-dashboard-preview">
-    <div class="preview-copy">
-        <p>Dashboard keluarga</p>
-        <h2>Semua informasi penting tampil dalam pola yang mudah discan.</h2>
-        <span>Ringkasan status, riwayat catatan, edukasi, dan konsultasi awal dibuat saling terhubung.</span>
-    </div>
-    <div class="preview-board" aria-hidden="true">
-        <div class="preview-board__top">
-            <strong>Ringkasan Balita</strong>
-            <span>Aktif</span>
-        </div>
-        <div class="preview-board__grid">
-            <div>
-                <small>Berat</small>
-                <strong>12.5 kg</strong>
-            </div>
-            <div>
-                <small>Tinggi</small>
-                <strong>90 cm</strong>
-            </div>
-            <div>
-                <small>Status</small>
-                <strong>Normal</strong>
-            </div>
-        </div>
-        <div class="preview-timeline">
-            <span style="width: 42%"></span>
-            <span style="width: 68%"></span>
-            <span style="width: 84%"></span>
-        </div>
-    </div>
-</section>
 
 <section class="home-workflow">
     <div class="home-workflow__intro">

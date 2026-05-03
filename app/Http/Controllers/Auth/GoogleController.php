@@ -66,7 +66,7 @@ class GoogleController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
         } catch (\Throwable $e) {
             Log::warning('Google login failed.', [
                 'message' => $e->getMessage(),

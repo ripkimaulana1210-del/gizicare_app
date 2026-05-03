@@ -12,12 +12,16 @@
 .home-hero {
     min-height: 590px;
     padding: clamp(34px, 5vw, 64px);
-    grid-template-columns: minmax(0, 1.02fr) minmax(330px, 0.58fr);
-    gap: 34px;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: end;
     background:
-        linear-gradient(90deg, rgba(8, 34, 22, 0.92) 0%, rgba(11, 74, 45, 0.78) 48%, rgba(47, 92, 159, 0.25) 100%),
+        linear-gradient(90deg, rgba(8, 34, 22, 0.94) 0%, rgba(11, 74, 45, 0.78) 56%, rgba(47, 92, 159, 0.18) 100%),
         linear-gradient(180deg, rgba(16, 31, 24, 0) 0%, rgba(16, 31, 24, 0.26) 100%),
         var(--hero-image) center / cover;
+}
+
+.home-hero__content {
+    max-width: 820px;
 }
 
 .home-hero__eyebrow {
@@ -39,23 +43,6 @@
     max-width: 720px;
     color: rgba(255, 255, 255, 0.9);
     font-size: 17px;
-}
-
-.home-hero__visual {
-    align-self: stretch;
-    align-content: end;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.hero-metric,
-.hero-insight-card,
-.hero-care-card {
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 16px 34px rgba(8, 34, 22, 0.16);
-    backdrop-filter: blur(8px);
 }
 
 .home-dashboard-preview,
@@ -102,6 +89,18 @@
 .pencatatan-insight-card h3,
 .pencatatan-insight-card span {
     color: #ffffff;
+}
+
+.growth-bars__empty {
+    display: grid;
+    min-height: 124px;
+    place-items: center;
+    border: 1px dashed rgba(255, 255, 255, 0.38);
+    border-radius: var(--ds-radius-sm);
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 850;
 }
 
 .pencatatan-analytics-grid {

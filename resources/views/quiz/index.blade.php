@@ -5,7 +5,15 @@
 @endsection
 
 @section('content')
+@php($jumlahQuiz = min(10, $totalSoal))
+
 <div class="container-form quiz-page">
+    @if (session('error'))
+        <div class="alert-error">
+            <p>{{ session('error') }}</p>
+        </div>
+    @endif
+
     <div class="edukasi-hero quiz-hero">
         <div>
             <p class="hero-kicker">Latihan Cepat</p>
@@ -21,7 +29,7 @@
     <section class="quiz-dashboard-strip" aria-label="Ringkasan quiz">
         <div>
             <span>Format</span>
-            <strong>10 soal acak</strong>
+            <strong>{{ $jumlahQuiz > 0 ? "{$jumlahQuiz} soal acak" : 'Belum tersedia' }}</strong>
         </div>
         <div>
             <span>Evaluasi</span>
@@ -41,29 +49,17 @@
             </svg>
         </div>
         <h4>Siap mulai quiz?</h4>
-        <p>Kamu akan mendapat 10 soal acak dari total {{ $totalSoal }} soal.</p>
+        <p>{{ $totalSoal > 0 ? "Kamu akan mendapat {$jumlahQuiz} soal acak dari total {$totalSoal} soal." : 'Belum ada soal yang tersedia.' }}</p>
 
-        <a href="{{ route('quiz.show') }}" class="btn-app btn-primary btn-large">
-            <span>Mulai Quiz</span>
-            <span class="btn-arrow" aria-hidden="true">-></span>
-        </a>
+        @if($totalSoal > 0)
+            <a href="{{ route('quiz.show') }}" class="btn-app btn-primary btn-large">
+                <span>Mulai Quiz</span>
+                <span class="btn-arrow" aria-hidden="true">-></span>
+            </a>
+        @else
+            <span class="empty-state empty-state--inline">Quiz akan tampil setelah soal ditambahkan.</span>
+        @endif
     </div>
-
-    @if($kategori->count() > 0)
-    <div class="quiz-topics">
-        <div class="content-section-title">
-            <div>
-                <p>Topik</p>
-                <h3>Topik Quiz</h3>
-            </div>
-        </div>
-        <div class="chip-row">
-            @foreach($kategori as $kat)
-                <span class="chip">{{ $kat }}</span>
-            @endforeach
-        </div>
-    </div>
-    @endif
 
     @if($history->count() > 0)
     <div class="quiz-history">

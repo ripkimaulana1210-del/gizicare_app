@@ -40,14 +40,16 @@
             </div>
 
             <div class="form-group">
-                <label>Nama Balita</label>
-                <input type="text" name="nama" placeholder="Masukkan nama" class="input-field"
+                <label for="nama">Nama Balita</label>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama" class="input-field"
+                    maxlength="255" autocomplete="name" required
                     value="{{ old('nama') }}">
             </div>
 
             <div class="form-group">
-                <label>Posyandu/Tempat</label>
-                <input type="text" name="posyandu" list="posyandu-options" placeholder="Contoh: Posyandu Melati" class="input-field"
+                <label for="posyandu">Posyandu/Tempat</label>
+                <input type="text" id="posyandu" name="posyandu" list="posyandu-options" placeholder="Contoh: Posyandu Melati" class="input-field"
+                    maxlength="120" autocomplete="organization" required
                     value="{{ old('posyandu') }}">
                 <datalist id="posyandu-options">
                     @foreach ($posyanduOptions as $posyandu)
@@ -57,8 +59,8 @@
             </div>
 
             <div class="form-group">
-                <label>Jenis Kelamin</label>
-                <select name="jk" class="input-field">
+                <label for="jk">Jenis Kelamin</label>
+                <select id="jk" name="jk" class="input-field" required>
                     <option value="">Pilih</option>
                     <option value="L" {{ old('jk') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                     <option value="P" {{ old('jk') == 'P' ? 'selected' : '' }}>Perempuan</option>
@@ -67,45 +69,57 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Usia (bulan)</label>
-                    <input type="number" name="umur" placeholder="Contoh: 24" class="input-field"
+                    <label for="umur">Usia (bulan)</label>
+                    <input type="number" id="umur" name="umur" placeholder="Contoh: 24" class="input-field"
+                        min="0" max="60" inputmode="numeric" required
                         value="{{ old('umur') }}">
                 </div>
 
                 <div class="form-group">
-                    <label>Berat (kg)</label>
-                    <input type="number" step="0.1" name="bb" placeholder="Contoh: 12.5" class="input-field"
+                    <label for="bb">Berat (kg)</label>
+                    <input type="number" id="bb" step="0.1" name="bb" placeholder="Contoh: 12.5" class="input-field"
+                        min="1" max="35" inputmode="decimal" required
                         value="{{ old('bb') }}">
                 </div>
 
                 <div class="form-group">
-                    <label>Panjang/Tinggi (cm)</label>
-                    <input type="number" step="0.1" name="tb" placeholder="Contoh: 90" class="input-field"
+                    <label for="tb">Panjang/Tinggi (cm)</label>
+                    <input type="number" id="tb" step="0.1" name="tb" placeholder="Contoh: 90" class="input-field"
+                        min="45" max="120" inputmode="decimal" required
                         value="{{ old('tb') }}">
                 </div>
 
                 <div class="form-group">
-                    <label>Lingkar Kepala (opsional)</label>
-                    <input type="number" step="0.1" name="lk" placeholder="Contoh: 48" class="input-field"
+                    <label for="lk">Lingkar Kepala (opsional)</label>
+                    <input type="number" id="lk" step="0.1" name="lk" placeholder="Contoh: 48" class="input-field"
+                        min="0" inputmode="decimal"
                         value="{{ old('lk') }}">
                 </div>
             </div>
 
-            <button class="btn-submit">
-                Hitung & Simpan
+            <button type="submit" class="btn-submit">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Hitung & Simpan</span>
             </button>
         </form>
 
         <aside class="pencatatan-insight-card">
             <p>Panel Pemantauan</p>
             <h3>Data terbaru akan membantu membaca arah pertumbuhan.</h3>
-            <div class="growth-bars" aria-hidden="true">
-                <span style="height: 34%"></span>
-                <span style="height: 58%"></span>
-                <span style="height: 47%"></span>
-                <span style="height: 72%"></span>
-                <span style="height: 82%"></span>
-                <span style="height: 66%"></span>
+            <div class="growth-bars" aria-label="Distribusi status gizi saat ini">
+                @if($data->count() > 0)
+                    @php($maxInsight = max(1, $statusSummary->max('count') ?? 1))
+                    @foreach ($statusSummary as $item)
+                        <span
+                            title="{{ $item['status'] }}: {{ $item['count'] }}"
+                            style="height: {{ $item['count'] > 0 ? max(16, ($item['count'] / $maxInsight) * 100) : 6 }}%"
+                        ></span>
+                    @endforeach
+                @else
+                    <span class="growth-bars__empty">Belum ada catatan</span>
+                @endif
             </div>
             <div class="insight-points">
                 <span>Catatan: {{ $data->count() }}</span>
@@ -253,16 +267,18 @@
                                 </span>
                             </td>
 
-                            <td class="flex gap-2">
-                                <a href="{{ route('pencatatan.edit', $item->id) }}" class="btn-edit">
-                                    Edit
-                                </a>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="{{ route('pencatatan.edit', $item->id) }}" class="btn-edit">
+                                        Edit
+                                    </a>
 
-                                <form action="{{ route('pencatatan.destroy', $item->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn-delete">Hapus</button>
-                                </form>
+                                    <form action="{{ route('pencatatan.destroy', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="return confirm('Hapus catatan ini?')">Hapus</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

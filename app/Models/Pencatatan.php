@@ -9,6 +9,7 @@ class Pencatatan extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'nama',
         'posyandu',
         'jk',
@@ -26,4 +27,9 @@ class Pencatatan extends Model
         'status_stunting',
         'standar_stunting'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

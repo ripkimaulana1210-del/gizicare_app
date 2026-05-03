@@ -43,4 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function pencatatans()
+    {
+        return $this->hasMany(Pencatatan::class);
+    }
+
+    public function diagnosisMessages()
+    {
+        return $this->hasMany(DiagnosisMessage::class);
+    }
+
+    public function diagnosisSessions()
+    {
+        return $this->hasMany(DiagnosisSession::class);
+    }
 }

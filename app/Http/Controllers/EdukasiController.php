@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Edukasi;
 use App\Models\Quiz;
 
@@ -12,11 +11,9 @@ class EdukasiController extends Controller
     {
         $materi = Edukasi::where('tipe', 'materi')->latest()->get();
         $jurnal = Edukasi::where('tipe', 'jurnal')->latest()->get();
-        $kategori = Edukasi::where('tipe', 'materi')->distinct()->pluck('kategori');
         $totalQuiz = Quiz::count();
-        $quizKategori = Quiz::select('kategori')->distinct()->pluck('kategori');
 
-        return view('edukasi.index', compact('materi', 'jurnal', 'kategori', 'totalQuiz', 'quizKategori'));
+        return view('edukasi.index', compact('materi', 'jurnal', 'totalQuiz'));
     }
 
     public function show($id)

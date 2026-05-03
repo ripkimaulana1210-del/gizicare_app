@@ -14,7 +14,6 @@
             <div class="quiz-question__head">
                 <span class="question-number">{{ $index + 1 }}</span>
                 <div>
-                    <span class="question-topic">{{ $q->kategori }}</span>
                     <p>{{ $q->pertanyaan }}</p>
                 </div>
             </div>

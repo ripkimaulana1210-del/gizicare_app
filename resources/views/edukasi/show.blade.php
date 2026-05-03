@@ -25,9 +25,6 @@
                 <span class="badge-type {{ $edukasi->tipe === 'materi' ? 'materi' : 'jurnal' }}">
                     {{ $edukasi->tipe === 'materi' ? 'Materi' : 'Jurnal/Laporan' }}
                 </span>
-                @if($edukasi->kategori)
-                    <span class="chip chip-small">{{ $edukasi->kategori }}</span>
-                @endif
                 @if($edukasi->durasi_baca)
                     <span>{{ $edukasi->durasi_baca }} menit baca</span>
                 @endif

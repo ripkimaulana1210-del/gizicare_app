@@ -36,15 +36,6 @@
         </div>
     </section>
 
-    @if($kategori->count() > 0)
-    <div class="chip-row" aria-label="Kategori edukasi">
-        <span class="chip is-active">Semua</span>
-        @foreach($kategori as $kat)
-            <span class="chip">{{ $kat }}</span>
-        @endforeach
-    </div>
-    @endif
-
     <div class="content-section-title">
         <div>
             <p>Materi Praktis</p>
@@ -60,14 +51,11 @@
                     @if($item->gambar)
                         <img src="{{ $item->gambar }}" alt="{{ $item->judul }}">
                     @else
-                        <span>{{ strtoupper(substr($item->kategori ?? 'Gizi', 0, 2)) }}</span>
+                        <span>GZ</span>
                     @endif
                 </div>
                 <div class="article-card__meta">
                     <span class="badge-type materi">Materi</span>
-                    @if($item->kategori)
-                        <span>{{ $item->kategori }}</span>
-                    @endif
                 </div>
                 <h4>{{ $item->judul }}</h4>
                 <p>{{ Str::limit(strip_tags($item->konten), 112) }}</p>
@@ -98,13 +86,6 @@
             <p class="hero-kicker">Quiz Gizi</p>
             <h3>Uji pemahaman setelah membaca materi.</h3>
             <p>Ada {{ $totalQuiz }} soal pilihan ganda dari beberapa topik gizi. Mulai quiz dari sini tanpa keluar dari alur edukasi.</p>
-            @if($quizKategori->count() > 0)
-                <div class="quiz-mini-topics" aria-label="Topik quiz">
-                    @foreach($quizKategori->take(5) as $kat)
-                        <span>{{ $kat }}</span>
-                    @endforeach
-                </div>
-            @endif
         </div>
         <a href="{{ route('quiz.index') }}" class="btn-app btn-primary btn-large">
             <span>Buka Quiz</span>
@@ -129,14 +110,11 @@
                     @if($item->gambar)
                         <img src="{{ $item->gambar }}" alt="{{ $item->judul }}">
                     @else
-                        <span>{{ strtoupper(substr($item->kategori ?? 'JR', 0, 2)) }}</span>
+                        <span>JR</span>
                     @endif
                 </a>
                 <div class="article-card__meta">
                     <span class="badge-type jurnal">Jurnal/Laporan</span>
-                    @if($item->kategori)
-                        <span>{{ $item->kategori }}</span>
-                    @endif
                 </div>
                 <h4>
                     <a href="{{ route('edukasi.show', $item->id) }}">{{ $item->judul }}</a>

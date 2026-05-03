@@ -16,17 +16,9 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/edukasi', [EdukasiController::class, 'index'])->name('edukasi.index');
-Route::get('/edukasi/{id}', [EdukasiController::class, 'show'])->name('edukasi.show');
-
 Route::get('/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->name('quiz.index');
 Route::get('/quiz/start', [\App\Http\Controllers\QuizController::class, 'show'])->name('quiz.show');
 Route::post('/quiz/submit', [\App\Http\Controllers\QuizController::class, 'submit'])->name('quiz.submit');
-
-Route::get('/diagnosis', [DiagnosisController::class, 'index'])->name('diagnosis');
-Route::post('/diagnosis/chat', [DiagnosisController::class, 'chat'])
-    ->middleware('throttle:20,1')
-    ->name('diagnosis.chat');
 
 require __DIR__ . '/auth.php';
 
@@ -38,13 +30,19 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard');
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/edukasi', [EdukasiController::class, 'index'])->name('edukasi.index');
+    Route::get('/edukasi/{id}', [EdukasiController::class, 'show'])->name('edukasi.show');
+
+    Route::get('/diagnosis', [DiagnosisController::class, 'index'])->name('diagnosis');
+    Route::post('/diagnosis/session', [DiagnosisController::class, 'storeSession'])->name('diagnosis.session.store');
+    Route::delete('/diagnosis/session/{session}', [DiagnosisController::class, 'destroySession'])->name('diagnosis.session.destroy');
+    Route::post('/diagnosis/chat', [DiagnosisController::class, 'chat'])
+        ->middleware('throttle:20,1')
+        ->name('diagnosis.chat');
 
     Route::get('/pencatatan', [PencatatanController::class, 'index'])->name('pencatatan.index');
     Route::post('/pencatatan', [PencatatanController::class, 'store'])->name('pencatatan.store');
