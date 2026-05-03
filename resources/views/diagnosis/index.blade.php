@@ -9,10 +9,10 @@
 @section('content')
 @php
     $starterPrompts = [
-        'Anak susah makan dan berat sulit naik.',
-        'Cek tanda awal stunting yang perlu diperhatikan.',
-        'Anak sering lemas dan tampak pucat.',
-        'Susun menu harian anak usia 2 tahun.',
+        'Anak 2 tahun susah makan dan BB sulit naik.',
+        'Berat tidak naik 2 bulan, apa yang perlu dicek?',
+        'Anak pucat, mudah lelah, dan nafsu makan turun.',
+        'Buat menu 1 hari anak 2 tahun agar BB naik sehat.',
     ];
 @endphp
 
@@ -55,7 +55,9 @@
             <div class="diagnosis-chat-messages" id="diagnosisChatMessages" aria-live="polite">
                 <article class="chat-message chat-message--assistant">
                     <div class="chat-message__meta">GiziCare AI</div>
-                    <p>Halo, ceritakan keluhan atau kondisi anak. Saya akan bantu beri arahan awal yang aman dan mudah diikuti.</p>
+                    <div class="chat-message__content">
+                        <p>Halo, ceritakan keluhan atau kondisi anak. Tambahkan umur, jenis kelamin, berat, tinggi, dan tren KMS bila ada supaya arahan awalnya lebih tepat.</p>
+                    </div>
                 </article>
             </div>
 
@@ -100,6 +102,91 @@
 
     const endpoint = panel.dataset.endpoint;
 
+    const formatInline = (text) => {
+        const fragment = document.createDocumentFragment();
+        const parts = String(text).split(/(\*\*[^*]+\*\*)/g);
+
+        parts.forEach((part) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                const strong = document.createElement('strong');
+                strong.textContent = part.slice(2, -2);
+                fragment.appendChild(strong);
+                return;
+            }
+
+            fragment.appendChild(document.createTextNode(part));
+        });
+
+        return fragment;
+    };
+
+    const appendTextBlock = (container, tagName, text) => {
+        const element = document.createElement(tagName);
+        element.appendChild(formatInline(text));
+        container.appendChild(element);
+    };
+
+    const renderAssistantContent = (container, content) => {
+        const lines = String(content || '').split(/\r?\n/);
+        let activeList = null;
+
+        const resetList = () => {
+            activeList = null;
+        };
+
+        const addListItem = (text, ordered = false) => {
+            const tagName = ordered ? 'OL' : 'UL';
+
+            if (!activeList || activeList.tagName !== tagName) {
+                activeList = document.createElement(ordered ? 'ol' : 'ul');
+                container.appendChild(activeList);
+            }
+
+            const item = document.createElement('li');
+            item.appendChild(formatInline(text));
+            activeList.appendChild(item);
+        };
+
+        lines.forEach((rawLine) => {
+            const line = rawLine.trim();
+
+            if (!line) {
+                resetList();
+                return;
+            }
+
+            const markdownHeading = line.match(/^#{1,3}\s+(.+)$/);
+            const boldHeading = line.match(/^\*\*([^*]+)\*\*:?\s*$/);
+            const plainHeading = line.match(/^(Ringkasan|Yang perlu dicek|Langkah mulai hari ini|Kapan perlu ke puskesmas\/dokter|Data yang saya perlukan|Catatan penting):?$/i);
+            const numberedHeading = line.match(/^\d+[.)]\s+(Ringkasan|Yang perlu dicek|Langkah mulai hari ini|Kapan perlu ke puskesmas\/dokter|Data yang saya perlukan|Catatan penting):?$/i);
+            const bullet = line.match(/^[-*\u2022]\s+(.+)$/);
+            const numbered = line.match(/^\d+[.)]\s+(.+)$/);
+
+            if (markdownHeading || boldHeading || plainHeading || numberedHeading) {
+                resetList();
+                appendTextBlock(container, 'h4', (markdownHeading?.[1] || boldHeading?.[1] || plainHeading?.[1] || numberedHeading?.[1]).replace(/:$/, ''));
+                return;
+            }
+
+            if (bullet) {
+                addListItem(bullet[1]);
+                return;
+            }
+
+            if (numbered) {
+                addListItem(numbered[1], true);
+                return;
+            }
+
+            resetList();
+            appendTextBlock(container, 'p', line);
+        });
+
+        if (!container.hasChildNodes()) {
+            appendTextBlock(container, 'p', content || '');
+        }
+    };
+
     const appendMessage = (role, content, state = '') => {
         const item = document.createElement('article');
         item.className = `chat-message chat-message--${role}${state ? ` ${state}` : ''}`;
@@ -108,8 +195,14 @@
         meta.className = 'chat-message__meta';
         meta.textContent = role === 'user' ? 'Anda' : 'GiziCare AI';
 
-        const body = document.createElement('p');
-        body.textContent = content;
+        const body = document.createElement('div');
+        body.className = 'chat-message__content';
+
+        if (role === 'assistant') {
+            renderAssistantContent(body, content);
+        } else {
+            appendTextBlock(body, 'p', content);
+        }
 
         item.append(meta, body);
         messages.appendChild(item);

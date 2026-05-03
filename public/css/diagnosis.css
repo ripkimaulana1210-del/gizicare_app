@@ -185,9 +185,41 @@
     text-transform: uppercase;
 }
 
-.chat-message p {
+.chat-message__content {
+    display: grid;
+    gap: 8px;
+}
+
+.chat-message__content p {
     margin: 0;
-    white-space: pre-line;
+}
+
+.chat-message__content h4 {
+    margin: 2px 0 0;
+    color: var(--ds-ink);
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.35;
+}
+
+.chat-message__content ul,
+.chat-message__content ol {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+    padding-left: 18px;
+}
+
+.chat-message__content li {
+    padding-left: 2px;
+}
+
+.chat-message__content strong {
+    font-weight: 900;
+}
+
+.chat-message--user .chat-message__content {
+    gap: 0;
 }
 
 .chat-message--assistant {

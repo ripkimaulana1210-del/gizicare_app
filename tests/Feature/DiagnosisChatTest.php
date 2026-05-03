@@ -62,8 +62,12 @@ class DiagnosisChatTest extends TestCase
 
         Http::assertSent(fn ($request) => $request->url() === 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent'
             && $request->hasHeader('x-goog-api-key', 'test-key')
-            && $request['generationConfig']['maxOutputTokens'] === 800
+            && $request['generationConfig']['maxOutputTokens'] === 1400
+            && $request['generationConfig']['temperature'] === 0.35
+            && $request['generationConfig']['topP'] === 0.85
             && $request['contents'][0]['role'] === 'user'
+            && str_contains($request['system_instruction']['parts'][0]['text'], 'Jangan membuka dengan kalimat umum')
+            && str_contains($request['system_instruction']['parts'][0]['text'], 'Langkah mulai hari ini')
         );
     }
 
