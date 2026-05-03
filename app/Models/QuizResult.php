@@ -5,25 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Quiz extends Model
+class QuizResult extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'edukasi_id',
-        'pertanyaan',
-        'pilihan',
+        'user_id',
+        'total_soal',
         'jawaban_benar',
-        'kategori',
-        'penjelasan',
+        'score',
+        'detail_jawaban',
     ];
 
     protected $casts = [
-        'pilihan' => 'array',
+        'detail_jawaban' => 'array',
     ];
 
-    public function edukasi()
+    public function user()
     {
-        return $this->belongsTo(Edukasi::class);
+        return $this->belongsTo(User::class);
     }
 }
+

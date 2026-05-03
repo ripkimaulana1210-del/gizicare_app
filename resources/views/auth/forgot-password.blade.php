@@ -1,25 +1,31 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.guest')
+
+@section('title', 'Lupa Password — GiziCare')
+
+@section('content')
+<h2 class="text-xl font-bold text-center text-gray-800 mb-1">Lupa Password?</h2>
+<p class="text-center text-sm text-gray-500 mb-5">Masukkan email untuk mendapatkan link reset</p>
+
+@if (session('status'))
+    <div class="mb-4 text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2">{{ session('status') }}</div>
+@endif
+
+<form method="POST" action="{{ route('password.email') }}">
+    @csrf
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" name="email" value="{{ old('email') }}" required autofocus
+               class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none text-sm">
+        @error('email')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <button type="submit" class="w-full py-2.5 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition text-sm">
+        Kirim Link Reset
+    </button>
+</form>
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+<p class="text-center text-sm text-gray-500 mt-5">
+    <a href="{{ route('login') }}" class="text-green-600 hover:underline">← Kembali ke login</a>
+</p>
+@endsection
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
