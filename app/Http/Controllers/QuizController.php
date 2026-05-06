@@ -11,35 +11,71 @@ class QuizController extends Controller
     public function index()
     {
         $totalSoal = Quiz::count();
+        $materiOptions = Quiz::select('kategori')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('kategori')
+            ->orderBy('kategori')
+            ->get();
         $history = QuizResult::where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->take(5)
-            ->get();
+            ->get()
+            ->map(function (QuizResult $result) {
+                $kategori = collect($result->detail_jawaban ?? [])
+                    ->pluck('kategori')
+                    ->filter()
+                    ->unique()
+                    ->values();
 
-        return view('quiz.index', compact('totalSoal', 'history'));
+                $result->materi_label = match (true) {
+                    $kategori->count() === 1 => $kategori->first(),
+                    $kategori->count() > 1 => 'Campuran',
+                    default => 'Quiz Gizi',
+                };
+
+                return $result;
+            });
+
+        return view('quiz.index', compact('totalSoal', 'materiOptions', 'history'));
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $soal = Quiz::inRandomOrder()->take(10)->get();
+        $materi = $request->query('materi');
+        $query = Quiz::query();
 
-        if ($soal->isEmpty()) {
-            return redirect()->route('quiz.index')->with('error', 'Belum ada soal quiz.');
+        if ($materi) {
+            $query->where('kategori', $materi);
         }
 
-        return view('quiz.show', compact('soal'));
+        $totalMateri = (clone $query)->count();
+        $jumlahSoal = min(10, $totalMateri);
+        $soal = $query->inRandomOrder()->take($jumlahSoal)->get();
+
+        if ($soal->isEmpty()) {
+            return redirect()->route('quiz.index')->with('error', 'Belum ada soal quiz untuk materi tersebut.');
+        }
+
+        return view('quiz.show', compact('soal', 'materi', 'totalMateri', 'jumlahSoal'));
     }
 
     public function submit(Request $request)
     {
         $jawaban = $request->input('jawaban', []);
-        $soalIds = array_keys($jawaban);
-        $soal = Quiz::whereIn('id', $soalIds)->get();
+        $soalIds = $request->input('soal_ids', array_keys($jawaban));
+        $materi = $request->input('materi');
+        $soal = Quiz::whereIn('id', $soalIds)->get()->keyBy('id');
 
         $benar = 0;
         $detail = [];
 
-        foreach ($soal as $q) {
+        foreach ($soalIds as $id) {
+            $q = $soal->get((int) $id);
+
+            if (! $q) {
+                continue;
+            }
+
             $jawabanUser = $jawaban[$q->id] ?? null;
             $isBenar = $jawabanUser === $q->jawaban_benar;
             if ($isBenar) {
@@ -47,9 +83,12 @@ class QuizController extends Controller
             }
 
             $detail[] = [
+                'kategori' => $q->kategori,
                 'pertanyaan' => $q->pertanyaan,
                 'jawaban_user' => $jawabanUser,
+                'jawaban_user_text' => $jawabanUser ? ($q->pilihan[$jawabanUser] ?? null) : null,
                 'jawaban_benar' => $q->jawaban_benar,
+                'jawaban_benar_text' => $q->pilihan[$q->jawaban_benar] ?? null,
                 'benar' => $isBenar,
                 'penjelasan' => $q->penjelasan,
             ];
@@ -68,6 +107,6 @@ class QuizController extends Controller
             ]);
         }
 
-        return view('quiz.result', compact('benar', 'total', 'score', 'detail'));
+        return view('quiz.result', compact('benar', 'total', 'score', 'detail', 'materi'));
     }
 }

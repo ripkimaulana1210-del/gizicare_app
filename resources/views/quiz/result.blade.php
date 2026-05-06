@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-form quiz-page">
     <div class="form-card quiz-result-card">
-        <p class="hero-kicker">Skor Akhir</p>
+        <p class="hero-kicker">Skor Akhir{{ $materi ? " - {$materi}" : '' }}</p>
         <h3>
             @if($score >= 80) Luar Biasa!
             @elseif($score >= 60) Bagus Sekali!
@@ -30,7 +30,8 @@
         </div>
 
         <div class="quiz-result-actions">
-            <a href="{{ route('quiz.show') }}" class="btn-app btn-primary">Coba Lagi</a>
+            <a href="{{ route('quiz.show', $materi ? ['materi' => $materi] : []) }}" class="btn-app btn-primary">Coba Lagi</a>
+            <a href="{{ route('quiz.index') }}" class="btn-app btn-ghost">Pilih Materi</a>
             <a href="{{ route('edukasi.index') }}" class="btn-app btn-ghost">Belajar Lagi</a>
         </div>
     </div>
@@ -47,18 +48,34 @@
         <div class="form-card answer-review {{ $d['benar'] ? 'is-correct' : 'is-wrong' }}">
             <div class="answer-review__head">
                 <span class="question-number">{{ $i + 1 }}</span>
-                <p>{{ $d['pertanyaan'] }}</p>
+                <div>
+                    <span class="quiz-question__topic">{{ $d['kategori'] ?? 'Quiz Gizi' }}</span>
+                    <p>{{ $d['pertanyaan'] }}</p>
+                </div>
             </div>
             <div class="answer-review__body">
                 <p>
                     Jawaban kamu:
-                    <strong>{{ $d['jawaban_user'] ?? '-' }}</strong>
+                    <strong>
+                        {{ $d['jawaban_user'] ?? '-' }}
+                        @if(!empty($d['jawaban_user_text']))
+                            - {{ $d['jawaban_user_text'] }}
+                        @endif
+                    </strong>
                     <span class="{{ $d['benar'] ? 'review-good' : 'review-bad' }}">
                         {{ $d['benar'] ? 'Benar' : 'Salah' }}
                     </span>
                 </p>
                 @if(!$d['benar'])
-                <p>Jawaban benar: <strong>{{ $d['jawaban_benar'] }}</strong></p>
+                <p>
+                    Jawaban benar:
+                    <strong>
+                        {{ $d['jawaban_benar'] }}
+                        @if(!empty($d['jawaban_benar_text']))
+                            - {{ $d['jawaban_benar_text'] }}
+                        @endif
+                    </strong>
+                </p>
                 @endif
                 @if($d['penjelasan'])
                 <div class="answer-explain">
