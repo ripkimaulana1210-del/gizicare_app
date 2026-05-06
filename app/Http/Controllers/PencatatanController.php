@@ -17,7 +17,7 @@ class PencatatanController extends Controller
     {
         $selectedPosyandu = $request->query('posyandu');
         $query = Pencatatan::query()
-            ->where('user_id', $request->user()->id)
+            ->with('user')
             ->latest();
 
         if ($selectedPosyandu) {
@@ -26,7 +26,6 @@ class PencatatanController extends Controller
 
         $data = $query->get();
         $posyanduOptions = Pencatatan::query()
-            ->where('user_id', $request->user()->id)
             ->select('posyandu')
             ->distinct()
             ->orderBy('posyandu')
@@ -94,7 +93,7 @@ class PencatatanController extends Controller
         ];
     }
 
-    private function payload(Request $request): array
+    private function payload(Request $request, bool $includeUser = false): array
     {
         $bb = (float) $request->bb;
         $tb = (float) $request->tb;
@@ -103,8 +102,7 @@ class PencatatanController extends Controller
         $assessment = $this->growthStandard->assess($request->jk, $umur, $bb, $tb);
         $stunting = $this->growthStandard->assessStunting($request->jk, $umur, $tb);
 
-        return [
-            'user_id' => $request->user()->id,
+        $payload = [
             'nama' => $request->nama,
             'posyandu' => trim((string) $request->posyandu),
             'jk' => $request->jk,
@@ -122,6 +120,12 @@ class PencatatanController extends Controller
             'status_stunting' => $stunting['status'],
             'standar_stunting' => $stunting['standard'],
         ];
+
+        if ($includeUser) {
+            $payload['user_id'] = $request->user()->id;
+        }
+
+        return $payload;
     }
 
     public function store(Request $request)
@@ -129,7 +133,7 @@ class PencatatanController extends Controller
         $request->validate($this->rules());
 
         try {
-            Pencatatan::create($this->payload($request));
+            Pencatatan::create($this->payload($request, true));
         } catch (InvalidArgumentException $exception) {
             return back()
                 ->withErrors(['tb' => $exception->getMessage()])
@@ -139,9 +143,9 @@ class PencatatanController extends Controller
         return back()->with('success', 'Data berhasil disimpan');
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $item = Pencatatan::where('user_id', $request->user()->id)->findOrFail($id);
+        $item = Pencatatan::findOrFail($id);
         return view('pencatatan.edit', compact('item'));
     }
 
@@ -149,7 +153,7 @@ class PencatatanController extends Controller
     {
         $request->validate($this->rules());
 
-        $data = Pencatatan::where('user_id', $request->user()->id)->findOrFail($id);
+        $data = Pencatatan::findOrFail($id);
 
         try {
             $data->update($this->payload($request));
@@ -163,9 +167,9 @@ class PencatatanController extends Controller
             ->with('success', 'Data berhasil diupdate');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        Pencatatan::where('user_id', $request->user()->id)->findOrFail($id)->delete();
+        Pencatatan::findOrFail($id)->delete();
         return back()->with('success', 'Data berhasil dihapus');
     }
 }

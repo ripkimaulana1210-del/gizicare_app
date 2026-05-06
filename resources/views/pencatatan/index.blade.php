@@ -226,6 +226,7 @@
                     <tr>
                         <th>Nama</th>
                         <th>Posyandu/Tempat</th>
+                        <th>Diinput Oleh</th>
                         <th>JK</th>
                         <th>Usia</th>
                         <th>Berat</th>
@@ -246,6 +247,7 @@
                         <tr>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->posyandu ?? 'Umum' }}</td>
+                            <td>{{ optional($item->user)->name ?? 'Data awal' }}</td>
                             <td>{{ $item->jk }}</td>
                             <td>{{ $item->umur }}</td>
                             <td>{{ $item->bb }}</td>
@@ -283,7 +285,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="14">
+                            <td colspan="15">
                                 <div class="empty-state">Belum ada data.</div>
                             </td>
                         </tr>

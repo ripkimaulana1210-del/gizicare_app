@@ -116,13 +116,63 @@ class PencatatanGrowthStandardTest extends TestCase
         $response->assertDontSee('Bima');
     }
 
-    public function test_pencatatan_is_scoped_to_authenticated_user(): void
+    public function test_pencatatan_is_shared_across_authenticated_users(): void
+    {
+        $user = User::factory()->create(['name' => 'Petugas Melati']);
+        $otherUser = User::factory()->create(['name' => 'Petugas Mawar']);
+
+        Pencatatan::create($this->pencatatanAttributes([
+            'user_id' => $user->id,
+            'nama' => 'Ari',
+            'posyandu' => 'Posyandu Melati',
+        ]));
+
+        Pencatatan::create($this->pencatatanAttributes([
+            'user_id' => $otherUser->id,
+            'nama' => 'Data Akun Lain',
+            'posyandu' => 'Posyandu Mawar',
+            'jk' => 'P',
+        ]));
+
+        $response = $this->actingAs($user)->get(route('pencatatan.index'));
+
+        $response->assertOk();
+        $response->assertSee('Ari');
+        $response->assertSee('Data Akun Lain');
+        $response->assertSee('Petugas Melati');
+        $response->assertSee('Petugas Mawar');
+    }
+
+    public function test_shared_pencatatan_can_be_updated_without_replacing_creator(): void
     {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
+        $record = Pencatatan::create($this->pencatatanAttributes([
+            'user_id' => $otherUser->id,
+            'nama' => 'Data Akun Lain',
+        ]));
 
-        Pencatatan::create([
-            'user_id' => $user->id,
+        $response = $this->actingAs($user)->put(route('pencatatan.update', $record), [
+            'nama' => 'Data Diperbarui',
+            'posyandu' => 'Posyandu Melati',
+            'jk' => 'L',
+            'umur' => 24,
+            'bb' => 12.9,
+            'tb' => 90,
+            'lk' => 48,
+        ]);
+
+        $response->assertRedirect(route('pencatatan.index'));
+
+        $record->refresh();
+        $this->assertSame($otherUser->id, $record->user_id);
+        $this->assertSame('Data Diperbarui', $record->nama);
+    }
+
+    private function pencatatanAttributes(array $overrides = []): array
+    {
+        return array_merge([
+            'user_id' => null,
             'nama' => 'Ari',
             'posyandu' => 'Posyandu Melati',
             'jk' => 'L',
@@ -139,32 +189,6 @@ class PencatatanGrowthStandardTest extends TestCase
             'z_score_stunting' => 0,
             'status_stunting' => 'Normal',
             'standar_stunting' => 'WHO/UNICEF Length/Height-for-Age',
-        ]);
-
-        Pencatatan::create([
-            'user_id' => $otherUser->id,
-            'nama' => 'Data Akun Lain',
-            'posyandu' => 'Posyandu Mawar',
-            'jk' => 'P',
-            'umur' => 24,
-            'bb' => 11,
-            'tb' => 88,
-            'lk' => 47,
-            'imt' => 14.2,
-            'status' => 'Normal',
-            'indikator' => 'BB/TB',
-            'z_score' => 0,
-            'standar' => 'WHO/UNICEF Weight-for-Height',
-            'indikator_stunting' => 'TB/U',
-            'z_score_stunting' => 0,
-            'status_stunting' => 'Normal',
-            'standar_stunting' => 'WHO/UNICEF Length/Height-for-Age',
-        ]);
-
-        $response = $this->actingAs($user)->get(route('pencatatan.index'));
-
-        $response->assertOk();
-        $response->assertSee('Ari');
-        $response->assertDontSee('Data Akun Lain');
+        ], $overrides);
     }
 }
