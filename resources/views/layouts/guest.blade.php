@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'GiziCare')</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/gizicare-logo.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/app.css?v={{ filemtime(public_path('css/app.css')) }}">
@@ -30,7 +30,7 @@
             <div class="auth-brand">
                 <a href="{{ route('home') }}" class="brand-link">
                     <span class="brand-mark" aria-hidden="true">
-                        <img src="{{ asset('images/gizicare-logo.svg') }}" alt="" class="brand-logo" width="40" height="40">
+                        <img src="{{ asset('images/logo.png') }}" alt="" class="brand-logo" width="40" height="40">
                     </span>
                     <span class="brand-title">GiziCare</span>
                 </a>
