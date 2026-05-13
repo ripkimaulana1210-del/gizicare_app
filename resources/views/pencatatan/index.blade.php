@@ -27,7 +27,14 @@
     @endif
 
     @if (session('success'))
-        <div class="auth-status">{{ session('success') }}</div>
+        @php($successMessage = session('success') === 'Data berhasil diupdate' ? 'Data berhasil diperbarui.' : session('success'))
+        <div class="gc-feedback gc-feedback--success" role="status" aria-live="polite">
+            <div class="gc-feedback__icon" aria-hidden="true">&#10003;</div>
+            <div>
+                <strong>Berhasil</strong>
+                <p>{{ $successMessage }}</p>
+            </div>
+        </div>
     @endif
 
     <div class="pencatatan-workspace">
@@ -275,10 +282,10 @@
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('pencatatan.destroy', $item->id) }}" method="POST">
+                                    <form action="{{ route('pencatatan.destroy', $item->id) }}" method="POST" class="js-delete-pencatatan-form">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-delete" onclick="return confirm('Hapus catatan ini?')">Hapus</button>
+                                        <button type="submit" class="btn-delete">Hapus</button>
                                     </form>
                                 </div>
                             </td>
@@ -298,7 +305,84 @@
 
 </div>
 
+<div class="gc-modal-overlay" data-delete-modal aria-hidden="true">
+    <div class="gc-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-describedby="deleteModalMessage">
+        <div class="gc-modal-icon gc-modal-icon--danger" aria-hidden="true">!</div>
+        <div class="gc-modal-copy">
+            <h3 id="deleteModalTitle">Hapus Data?</h3>
+            <p id="deleteModalMessage">Apakah kamu yakin ingin menghapus catatan gizi ini?</p>
+        </div>
+        <div class="gc-modal-actions">
+            <button type="button" class="gc-modal-btn gc-modal-btn--neutral" data-delete-cancel>Batal</button>
+            <button type="button" class="gc-modal-btn gc-modal-btn--danger" data-delete-confirm>Hapus</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    (() => {
+        const modal = document.querySelector('[data-delete-modal]');
+        const cancelButton = document.querySelector('[data-delete-cancel]');
+        const confirmButton = document.querySelector('[data-delete-confirm]');
+        const deleteForms = document.querySelectorAll('.js-delete-pencatatan-form');
+        let selectedForm = null;
+
+        if (!modal || !cancelButton || !confirmButton || deleteForms.length === 0) {
+            return;
+        }
+
+        const openModal = (form) => {
+            selectedForm = form;
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('gc-modal-open');
+            window.setTimeout(() => confirmButton.focus(), 80);
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('gc-modal-open');
+            selectedForm = null;
+        };
+
+        deleteForms.forEach((form) => {
+            form.addEventListener('submit', (event) => {
+                if (form.dataset.confirmed === 'true') {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                openModal(form);
+            });
+        });
+
+        confirmButton.addEventListener('click', () => {
+            if (!selectedForm) {
+                closeModal();
+                return;
+            }
+
+            selectedForm.dataset.confirmed = 'true';
+            selectedForm.requestSubmit();
+        });
+
+        cancelButton.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeModal();
+            }
+        });
+    })();
+
     (() => {
         const chartData = @json($chartData['posyandu']);
         const canvas = document.getElementById('posyanduChart');

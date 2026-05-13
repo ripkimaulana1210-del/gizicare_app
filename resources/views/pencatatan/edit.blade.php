@@ -8,6 +8,14 @@
 <div class="container-form">
 
     @if ($errors->any())
+        <div class="gc-feedback gc-feedback--error" role="alert" aria-live="assertive">
+            <div class="gc-feedback__icon" aria-hidden="true">!</div>
+            <div>
+                <strong>Update gagal</strong>
+                <p>Data belum bisa diperbarui. Periksa kembali isian yang ditandai.</p>
+            </div>
+        </div>
+
         <div class="alert-error">
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
