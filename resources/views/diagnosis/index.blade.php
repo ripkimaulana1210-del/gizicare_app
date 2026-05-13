@@ -126,7 +126,7 @@
                 @endforeach
             </div>
 
-            <form class="diagnosis-chat-form" id="diagnosisChatForm">
+            <form class="diagnosis-chat-form" id="diagnosisChatForm" data-no-page-loading>
                 <div class="diagnosis-chat-input">
                     <label class="sr-only" for="diagnosisMessage">Pesan konsultasi</label>
                     <textarea

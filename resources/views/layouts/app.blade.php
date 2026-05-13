@@ -256,7 +256,11 @@
             });
 
             document.querySelectorAll('form').forEach((form) => {
-                form.addEventListener('submit', () => {
+                form.addEventListener('submit', (event) => {
+                    if (event.defaultPrevented || form.hasAttribute('data-no-page-loading')) {
+                        return;
+                    }
+
                     showPageLoading();
                 });
             });
